@@ -9,7 +9,7 @@ print("All initialization is done ")
 
 @app.get('/hello')
 def hello():
-   return {'hello': 'world'}
+   return {'hate': 'niggas'}
 
 graphql_app = GraphQLRouter(schema)
 app.include_router(graphql_app, prefix="/gql")

@@ -9,7 +9,7 @@ class Query:
         self,
         info: strawberry.types.Info,
     ) -> str:
-        return "hello world"
+        return "hate niggas"
 
 
 schema = strawberry.federation.Schema(
