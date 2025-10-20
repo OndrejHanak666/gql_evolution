@@ -1,16 +1,41 @@
-from typing import Optional
-import typing
+import asyncio
+import dataclasses
 import datetime
-import uuid
+import typing
 import strawberry
 
-from uoishelpers.gqlpermissions import OnlyForAuthentized
-from uoishelpers.resolvers import getLoadersFromInfo, createInputs2, PageResolver
+import strawberry.types
+from uoishelpers.gqlpermissions import (
+    OnlyForAuthentized,
+    SimpleInsertPermission, 
+    SimpleUpdatePermission, 
+    SimpleDeletePermission
+)    
+from uoishelpers.resolvers import (
+    getLoadersFromInfo, 
+    createInputs,
+    createInputs2,
+
+    InsertError, 
+    Insert, 
+    UpdateError, 
+    Update, 
+    DeleteError, 
+    Delete,
+
+    PageResolver,
+    VectorResolver,
+    ScalarResolver
+)
+from uoishelpers.gqlpermissions.LoadDataExtension import LoadDataExtension
+from uoishelpers.gqlpermissions.RbacProviderExtension import RbacProviderExtension
+from uoishelpers.gqlpermissions.RbacInsertProviderExtension import RbacInsertProviderExtension
+from uoishelpers.gqlpermissions.UserRoleProviderExtension import UserRoleProviderExtension
+from uoishelpers.gqlpermissions.UserAccessControlExtension import UserAccessControlExtension
+from uoishelpers.gqlpermissions.UserAbsoluteAccessControlExtension import UserAbsoluteAccessControlExtension
 
 from .BaseGQLModel import BaseGQLModel, IDType, Relation
-from ._GraphResolvers import resolve_id, resolve_name, resolve_created, resolve_lastchange, resolve_createdby, resolve_changedby
-
-PublicationTypeGQLModel = typing.Annotated["PublicationTypeGQLModel", strawberry.lazy(".PublicationTypeGQLModel")]
+from .TimeUnit import TimeUnit
 
 @createInputs2
 class PublicationInputFilter:
@@ -32,124 +57,87 @@ class PublicationGQLModel(BaseGQLModel):
     def getLoader(cls, info: strawberry.types.Info):
         return getLoadersFromInfo(info).PublicationModel
 
-    id = resolve_id
-    name = resolve_name
-
-    @strawberry.field(description="publication type id")
-    def publication_type_id(self) -> Optional[IDType]:
-        return getattr(self, "publication_type_id", None)
-
-    @strawberry.field(description="published date")
-    def published_date(self) -> Optional[datetime.datetime]:
-        return getattr(self, "published_date", None)
-
-    @strawberry.field(description="reference")
-    def reference(self) -> Optional[str]:
-        return getattr(self, "reference", None)
-
-    @strawberry.field(description="If a publication is valid")
-    def valid(self) -> Optional[bool]:
-        return getattr(self, "valid", None)
-
-    @strawberry.field(description="place")
-    def place(self) -> Optional[str]:
-        return getattr(self, "place", None)
-
-    # meta timestamps / authors (read-only)
-    created: Optional[datetime.datetime] = strawberry.field(description="creation timestamp", default=None)
-    lastchange: Optional[datetime.datetime] = strawberry.field(description="last change timestamp", default=None)
-    createdby: Optional[IDType] = strawberry.field(description="who created this", default=None)
-    changedby: Optional[IDType] = strawberry.field(description="who changed this", default=None)
-
-
-@strawberry.interface(description="Publication queries")
-class PublicationQuery:
-    publication_by_id: Optional[PublicationGQLModel] = strawberry.field(
-        description="get a publication by its id",
-        permission_classes=[OnlyForAuthentized],
-        resolver=PublicationGQLModel.load_with_loader
+    path: typing.Optional[str] = strawberry.field(
+        description="""Materialized path representing the group's hierarchical location.  
+Materializovaná cesta reprezentující umístění skupiny v hierarchii.""",
+        default=None,
+        permission_classes=[OnlyForAuthentized]
     )
 
-    publication_page: typing.List[PublicationGQLModel] = strawberry.field(
-        description="get a page of publications",
-        permission_classes=[OnlyForAuthentized],
-        resolver=PageResolver[PublicationGQLModel](whereType=PublicationInputFilter)
+    name: typing.Optional[str] = strawberry.field(
+        default=None,
+        description="""Publication name assigned by an administrator""",
+        permission_classes=[
+            OnlyForAuthentized
+        ]
     )
-# filepath: c:\Users\oh200\OneDrive - Univerzita obrany\škola\IT\5. semestr\gql_evolution\src\GraphTypeDefinitions\PublicationGQLModel.py
-from typing import Optional
-import typing
-import datetime
-import uuid
-import strawberry
 
-from uoishelpers.gqlpermissions import OnlyForAuthentized
-from uoishelpers.resolvers import getLoadersFromInfo, createInputs2, PageResolver
+    publication_type_id: typing.Optional[IDType] = strawberry.field(
+        default=None,
+        description="""ID of the publication type""",
+        permission_classes=[OnlyForAuthentized]
+    )
 
-from .BaseGQLModel import BaseGQLModel, IDType, Relation
-from ._GraphResolvers import resolve_id, resolve_name, resolve_created, resolve_lastchange, resolve_createdby, resolve_changedby
+    published_date: typing.Optional[datetime.datetime] = strawberry.field(
+        default=None,
+        description="""Date of publication""",
+        permission_classes=[OnlyForAuthentized]
+    )
 
-PublicationTypeGQLModel = typing.Annotated["PublicationTypeGQLModel", strawberry.lazy(".PublicationTypeGQLModel")]
+    reference: typing.Optional[str] = strawberry.field(
+        default=None,
+        description="""Reference of the publication""",
+        permission_classes=[OnlyForAuthentized]
+    )
 
-@createInputs2
-class PublicationInputFilter:
-    name: str
-    published_date: datetime.datetime
-    reference: str
-    valid: bool
-    place: str
-    id: IDType
-    publication_type_id: IDType
+    valid: typing.Optional[bool] = strawberry.field(
+        name="valid_raw",
+        description="""If it intersects current date""",
+        default=None,
+        permission_classes=[OnlyForAuthentized]
+    )
+
+    @strawberry.field(
+        name="valid",
+        description="""Event duration, implicitly in minutes""",
+        permission_classes=[
+            OnlyForAuthentized,
+            # OnlyForAdmins
+        ],
+    )
+    def valid_(self) -> typing.Optional[bool]:
+     if self.valid is not None:
+        return self.valid
+
+     now = datetime.datetime.now().date()  # dnešní datum bez času
+     if self.published_date:
+        # True pokud published_date je dnešní den
+         return self.published_date.date() == now
+
+     return False
+    
+    place: typing.Optional[str] = strawberry.field(
+        default=None,
+        description="""Place of publication""",
+        permission_classes=[OnlyForAuthentized]
+    )
 
 
-@strawberry.federation.type(
-    keys=["id"],
-    description="Entity representing a publication"
+
+
+
+@strawberry.interface(
+    description="""Publication queries"""
 )
-class PublicationGQLModel(BaseGQLModel):
-    @classmethod
-    def getLoader(cls, info: strawberry.types.Info):
-        return getLoadersFromInfo(info).PublicationModel
-
-    id = resolve_id
-    name = resolve_name
-
-    @strawberry.field(description="publication type id")
-    def publication_type_id(self) -> Optional[IDType]:
-        return getattr(self, "publication_type_id", None)
-
-    @strawberry.field(description="published date")
-    def published_date(self) -> Optional[datetime.datetime]:
-        return getattr(self, "published_date", None)
-
-    @strawberry.field(description="reference")
-    def reference(self) -> Optional[str]:
-        return getattr(self, "reference", None)
-
-    @strawberry.field(description="If a publication is valid")
-    def valid(self) -> Optional[bool]:
-        return getattr(self, "valid", None)
-
-    @strawberry.field(description="place")
-    def place(self) -> Optional[str]:
-        return getattr(self, "place", None)
-
-    # meta timestamps / authors (read-only)
-    created: Optional[datetime.datetime] = strawberry.field(description="creation timestamp", default=None)
-    lastchange: Optional[datetime.datetime] = strawberry.field(description="last change timestamp", default=None)
-    createdby: Optional[IDType] = strawberry.field(description="who created this", default=None)
-    changedby: Optional[IDType] = strawberry.field(description="who changed this", default=None)
-
-
-@strawberry.interface(description="Publication queries")
 class PublicationQuery:
-    publication_by_id: Optional[PublicationGQLModel] = strawberry.field(
-        description="get a publication by its id",
+    publication_by_id: typing.Optional[PublicationGQLModel] = strawberry.field(
+        description="""get a publication by its id""",
         permission_classes=[OnlyForAuthentized],
         resolver=PublicationGQLModel.load_with_loader
     )
 
     publication_page: typing.List[PublicationGQLModel] = strawberry.field(
-        description="get a page of publications",
+        description="""get a page of publications""",
         permission_classes=[OnlyForAuthentized],
         resolver=PageResolver[PublicationGQLModel](whereType=PublicationInputFilter)
     )
