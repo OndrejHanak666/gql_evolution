@@ -7,6 +7,7 @@ from src.DBDefinitions import (
     EventInvitationModel,
     PublicationModel,
     PublicationAuthorModel,
+    PublicationTypeModel
 )
 
 from uoishelpers.dataloaders.LoaderMapBase import LoaderMapBase
@@ -32,6 +33,7 @@ class LoaderMap(LoaderMapBase[BaseModel]):
         self.EventInvitationModel = self.get(EventInvitationModel)
         self.PublicationModel = self.get(PublicationModel)
         self.PublicationAuthorModel = self.get(PublicationAuthorModel)
+        self.PublicationTypeModel = self.get(PublicationTypeModel)
 
         # print(f"LoaderMap created with session: {session}")
 
