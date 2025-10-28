@@ -112,7 +112,7 @@ Materializovaná cesta reprezentující umístění skupiny v hierarchii.""",
      now = datetime.datetime.now().date()  # dnešní datum bez času
      if self.published_date:
         # True pokud published_date je dnešní den
-         return self.published_date.date() == now
+         return self.published_date.date() <= now
 
      return False
     

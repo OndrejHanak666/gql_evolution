@@ -7,7 +7,8 @@ from src.DBDefinitions import (
     EventInvitationModel,
     PublicationModel,
     PublicationAuthorModel,
-    PublicationTypeModel
+    PublicationTypeModel,
+    PublicationCategoryModel
 )
 
 from uoishelpers.dataloaders.LoaderMapBase import LoaderMapBase
@@ -25,6 +26,7 @@ class LoaderMap(LoaderMapBase[BaseModel]):
     PublicationModel: IDLoader[src.DBDefinitions.PublicationModel] = None
     PublicationAuthorModel: IDLoader[src.DBDefinitions.PublicationAuthorModel] = None
     PublicationTypeModel: IDLoader[src.DBDefinitions.PublicationTypeModel] = None
+    PublicationCategoryModel: IDLoader[src.DBDefinitions.PublicationCategoryModel] = None
 
     def __init__(self, session):
         super().__init__(session)
@@ -34,6 +36,7 @@ class LoaderMap(LoaderMapBase[BaseModel]):
         self.PublicationModel = self.get(PublicationModel)
         self.PublicationAuthorModel = self.get(PublicationAuthorModel)
         self.PublicationTypeModel = self.get(PublicationTypeModel)
+        self.PublicationCategoryModel = self.get(PublicationCategoryModel)
 
         # print(f"LoaderMap created with session: {session}")
 

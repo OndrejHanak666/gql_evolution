@@ -12,6 +12,7 @@ from .EventInvitationModel import EventInvitationModel
 from .PublicationModel import PublicationModel
 from .PublicationAuthorModel import PublicationAuthorModel
 from .PublicationTypeModel import PublicationTypeModel
+from.PublicationCategoryModel import PublicationCategoryModel
 
 async def startEngine(connectionstring, makeDrop=False, makeUp=True):
     """Provede nezbytne ukony a vrati asynchronni SessionMaker"""

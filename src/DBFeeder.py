@@ -9,7 +9,8 @@ from src.DBDefinitions import (
     EventInvitationModel,
     PublicationModel,
     PublicationAuthorModel,
-    PublicationTypeModel
+    PublicationTypeModel,
+    PublicationCategoryModel
 )
 
 get_demodata = lambda :readJsonFile(jsonFileName="./systemdata.json")
@@ -26,7 +27,8 @@ async def initDB(asyncSessionMaker, filename="./systemdata.json"):
             EventInvitationModel,
             PublicationModel,
             PublicationAuthorModel,
-            PublicationTypeModel
+            PublicationTypeModel,
+            PublicationCategoryModel
         ]
         
 
@@ -46,7 +48,8 @@ async def backupDB(asyncSessionMaker, filename="./systemdata.backup.json"):
         EventInvitationModel,
         PublicationModel,
         PublicationAuthorModel,
-        PublicationTypeModel
+        PublicationTypeModel,
+        PublicationCategoryModel
     ]
     data = []
     async with asyncSessionMaker() as session:
