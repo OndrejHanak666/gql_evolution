@@ -37,6 +37,10 @@ from uoishelpers.gqlpermissions.UserAbsoluteAccessControlExtension import UserAb
 from .BaseGQLModel import BaseGQLModel, IDType, Relation
 from .TimeUnit import TimeUnit
 
+
+PublicationGQLModel = typing.Annotated["PublicationGQLModel", strawberry.lazy(".PublicationGQLModel")]
+PublicationInputFilter = typing.Annotated["PublicationInputFilter", strawberry.lazy(".PublicationGQLModel")]
+
 @createInputs2
 class PublicationTypeInputFilter:
     name: str
@@ -78,6 +82,14 @@ Materializovaná cesta reprezentující umístění skupiny v hierarchii.""",
         default=None,
         permission_classes=[OnlyForAuthentized],
         directives=[Relation(to="CategoryGQLModel")]
+    )
+
+    publicattions: typing.List[PublicationGQLModel] = strawberry.field(
+        description="Publications associated with this publication type",
+        permission_classes=[
+            OnlyForAuthentized
+        ],
+        resolver=VectorResolver[PublicationGQLModel](fkey_field_name="publication_type_id", whereType=PublicationInputFilter)
     )
 
 

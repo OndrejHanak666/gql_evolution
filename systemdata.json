@@ -580,14 +580,14 @@
     "publication_authors": [
         {
             "id": "0d80595a-5838-44d3-8de2-f0e143df429c",
-            "user_id": "2d9dc5ca-a4a2-11ed-b9df-0242ac120003",
+            "user_id": "51d101a0-81f1-44ca-8366-6cf51432e8d6",
             "publication_id": "cb3c3978-e716-46ac-9a3b-bb8f9d806a46",
             "order": 1,
             "share": 0.5
         },
         {
             "id": "0d80595f-5838-44d3-8de2-f0e143df429c",
-            "user_id": "2d9dc868-a4a2-11ed-b9df-0242ac120003",
+            "user_id": "6a6ca6e9-2222-498f-b270-b7b07c2afa41",
             "publication_id": "cb3c3978-e716-46ac-9a3b-bb8f9d806a46",
             "order": 2,
             "share": 0.5

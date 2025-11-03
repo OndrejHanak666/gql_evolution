@@ -25,10 +25,11 @@ async def initDB(asyncSessionMaker, filename="./systemdata.json"):
         dbModels = [
             EventModel, 
             EventInvitationModel,
-            PublicationModel,
-            PublicationAuthorModel,
+            PublicationCategoryModel,
             PublicationTypeModel,
-            PublicationCategoryModel
+            PublicationModel,
+            PublicationAuthorModel
+            
         ]
         
 

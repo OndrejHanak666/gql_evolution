@@ -13,4 +13,14 @@ class PublicationTypeModel(BaseModel):
     name_en: Mapped[Optional[str]] = mapped_column(String, default=None, nullable=True)
     category_id: Mapped[Optional[IDType]] = UUIDFKey(default=None, nullable=True, comment="ID of the associated category")
 
+
+    #vztah na publikace (odpovídá PublicationModel)
+    publications = relationship(
+        "PublicationModel",
+         back_populates="publicationtype",
+         uselist=True,
+         init=True,
+         cascade="save-update"
+     )
+
     

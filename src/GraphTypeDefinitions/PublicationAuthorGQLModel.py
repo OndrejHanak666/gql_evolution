@@ -38,6 +38,9 @@ from .BaseGQLModel import BaseGQLModel, IDType, Relation
 from .TimeUnit import TimeUnit
 
 
+UserGQLModel = typing.Annotated["UserGQLModel", strawberry.lazy(".UserGQLModel")]
+PublicationGQLModel = typing.Annotated["PublicationGQLModel", strawberry.lazy(".PublicationGQLModel")]
+PublicationInputFilter = typing.Annotated["PublicationInputFilter", strawberry.lazy(".PublicationGQLModel")]
 
 @createInputs2
 class PublicationAuthorInputFilter:
@@ -90,6 +93,22 @@ Materializovaná cesta reprezentující umístění skupiny v hierarchii.""",
         default=None,
         permission_classes=[OnlyForAuthentized],
         directives=[Relation(to="UserGQLModel")]
+    )
+
+    user: typing.Optional[UserGQLModel] = strawberry.field(
+        description="""User assigned to the author role""",
+        permission_classes=[
+            OnlyForAuthentized
+        ],
+        resolver=ScalarResolver[UserGQLModel](fkey_field_name="user_id")
+    )
+
+    publication: typing.Optional[PublicationGQLModel] = strawberry.field(
+        description="""Associated publication""",
+        permission_classes=[
+            OnlyForAuthentized
+        ],
+        resolver=ScalarResolver[PublicationGQLModel](fkey_field_name="publication_id")
     )   
 
 

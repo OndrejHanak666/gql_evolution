@@ -10,6 +10,7 @@ from uoishelpers.resolvers import (
     VectorResolver
 )
 from .EventInvitationGQLModel import EventInvitationGQLModel, EventInvitationInputFilter
+from .PublicationAuthorGQLModel import PublicationAuthorGQLModel, PublicationAuthorInputFilter
 
 @strawberry.federation.type(extend=True, keys=["id"])
 class UserGQLModel:
@@ -23,6 +24,14 @@ class UserGQLModel:
             OnlyForAuthentized
         ],
         resolver=VectorResolver[EventInvitationGQLModel](fkey_field_name="user_id", whereType=EventInvitationInputFilter)
+    )
+
+    publication_authors: typing.List[PublicationAuthorGQLModel] = strawberry.field(
+        description="Publication authors associated with the user",
+        permission_classes=[
+            OnlyForAuthentized
+        ],
+        resolver=VectorResolver[PublicationAuthorGQLModel](fkey_field_name="user_id", whereType=PublicationAuthorInputFilter)
     )
 
     # async def event_invitations(self, info:strawberry.types.Info)
