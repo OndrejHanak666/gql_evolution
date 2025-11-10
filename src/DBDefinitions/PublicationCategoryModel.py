@@ -11,3 +11,13 @@ class PublicationCategoryModel(BaseModel):
 
     name: Mapped[Optional[str]] = mapped_column(String, default=None, nullable=True)
     name_en: Mapped[Optional[str]] = mapped_column(String, default=None, nullable=True)
+
+    #vztah na typy publikací (odpovídá PublicationTypeModel)
+    publicationtypes = relationship(
+        "PublicationTypeModel",
+         back_populates="category",
+         uselist=True,
+         init=True,
+         cascade="save-update"
+     )
+    

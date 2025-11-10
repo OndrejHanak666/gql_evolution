@@ -40,6 +40,8 @@ from .TimeUnit import TimeUnit
 
 PublicationGQLModel = typing.Annotated["PublicationGQLModel", strawberry.lazy(".PublicationGQLModel")]
 PublicationInputFilter = typing.Annotated["PublicationInputFilter", strawberry.lazy(".PublicationGQLModel")]
+PublicationCategoryGQLModel = typing.Annotated["PublicationCategoryGQLModel", strawberry.lazy(".PublicationCategoryGQLModel")]
+PublicationCategoryInputFilter = typing.Annotated["PublicationCategoryInputFilter", strawberry.lazy(".PublicationCategoryGQLModel")]
 
 @createInputs2
 class PublicationTypeInputFilter:
@@ -84,12 +86,21 @@ Materializovaná cesta reprezentující umístění skupiny v hierarchii.""",
         directives=[Relation(to="CategoryGQLModel")]
     )
 
-    publicattions: typing.List[PublicationGQLModel] = strawberry.field(
+    publications: typing.List[PublicationGQLModel] = strawberry.field(
         description="Publications associated with this publication type",
         permission_classes=[
             OnlyForAuthentized
         ],
         resolver=VectorResolver[PublicationGQLModel](fkey_field_name="publication_type_id", whereType=PublicationInputFilter)
+    )
+
+
+    category: typing.Optional[PublicationCategoryGQLModel] = strawberry.field(
+        description="""Associated publication category""",
+        permission_classes=[
+            OnlyForAuthentized
+        ],
+        resolver=ScalarResolver[PublicationCategoryGQLModel](fkey_field_name="category_id")
     )
 
 

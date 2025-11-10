@@ -10,7 +10,8 @@ from src.DBDefinitions import (
     PublicationModel,
     PublicationAuthorModel,
     PublicationTypeModel,
-    PublicationCategoryModel
+    PublicationCategoryModel,
+    PublicationSubjectModel
 )
 
 get_demodata = lambda :readJsonFile(jsonFileName="./systemdata.json")
@@ -28,7 +29,8 @@ async def initDB(asyncSessionMaker, filename="./systemdata.json"):
             PublicationCategoryModel,
             PublicationTypeModel,
             PublicationModel,
-            PublicationAuthorModel
+            PublicationAuthorModel,
+            PublicationSubjectModel
             
         ]
         
@@ -50,7 +52,8 @@ async def backupDB(asyncSessionMaker, filename="./systemdata.backup.json"):
         PublicationModel,
         PublicationAuthorModel,
         PublicationTypeModel,
-        PublicationCategoryModel
+        PublicationCategoryModel,
+        PublicationSubjectModel
     ]
     data = []
     async with asyncSessionMaker() as session:

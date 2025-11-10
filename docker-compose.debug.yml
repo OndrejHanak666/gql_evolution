@@ -108,8 +108,7 @@ services:
       - postgres_gql
     # volumes:
     #   - <<: *system-data-volume
-
-
+    
   postgres_gql:
     image: postgres
     environment:

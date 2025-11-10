@@ -9,8 +9,8 @@ from sqlalchemy import (
 from .BaseModel import BaseModel, UUIDFKey, IDType
 
 
-class SubjectModel(BaseModel):
+class PublicationSubjectModel(BaseModel):
     __tablename__ = "publication_subjects"
 
     publication_id: Mapped[Optional[IDType]] = mapped_column(ForeignKey("publications.id"), default=None, nullable=True, comment="ID of the publication")
-    subject_id: Mapped[Optional[IDType]] = mapped_column(ForeignKey("plan_subjects.id"), default=None, nullable=True, comment="ID of the subject")
+    subject_id: Mapped[Optional[IDType]] = UUIDFKey(ForeignKey("acsubjects.id"), default=None, nullable=True, comment="ID of the subject")

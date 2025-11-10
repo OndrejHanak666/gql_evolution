@@ -16,11 +16,12 @@ timedelta = strawberry.scalar(
 from .BaseGQLModel import Relation
 from .BaseGQLModel import BaseGQLModel
 from .UserGQLModel import UserGQLModel
+from .SubjectGQLModel import SubjectGQLModel
 
 schema = strawberry.federation.Schema(
     query=Query,
     mutation=Mutation,
-    types=(UserGQLModel, BaseGQLModel), 
+    types=(UserGQLModel,SubjectGQLModel, BaseGQLModel), 
     scalar_overrides={datetime.timedelta: timedelta._scalar_definition},
 
     extensions=[],

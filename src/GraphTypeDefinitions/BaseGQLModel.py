@@ -11,6 +11,7 @@ UserGQLModel = typing.Annotated["UserGQLModel", strawberry.lazy(".UserGQLModel")
 
 
 
+
 from strawberry.federation.schema_directive import schema_directive, Location
 from strawberry.directive import DirectiveLocation
 @schema_directive(
