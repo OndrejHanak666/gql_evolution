@@ -158,3 +158,184 @@ class PublicationQuery:
         permission_classes=[OnlyForAuthentized],
         resolver=PageResolver[PublicationGQLModel](whereType=PublicationInputFilter)
     )
+
+
+from uoishelpers.resolvers import TreeInputStructureMixin, InputModelMixin
+@strawberry.input(
+    description="""Input type for creating a Event"""
+)
+
+class PublicationInsertGQLModel(InputModelMixin):
+   getLoader = PublicationGQLModel.getLoader
+   name: typing.Optional[str] = strawberry.field(
+      description="Publication name assigned by an administrator",
+      default = None
+   )
+
+   published_date: typing.Optional[datetime.datetime] = strawberry.field(
+        description="Date of publication",
+        default = None
+     )
+   
+   reference: typing.Optional[str] = strawberry.field(
+        description="Reference of the publication",
+        default = None
+     )
+   
+   place: typing.Optional[str] = strawberry.field(
+        description="Place of publication",
+        default = None
+     )
+   
+   id: typing.Optional[IDType] = strawberry.field(
+        description="Publication ID",
+        default = None
+     )
+   
+   rbacobject_id: strawberry.Private[IDType] = IDType("d75d64a4-bf5f-43c5-9c14-8fda7aff6c09")
+   createdby_id: strawberry.Private[IDType] = None
+
+
+@strawberry.input(
+    description="""Input type for updating a Publication"""
+)
+
+class PublicationUpdateGQLModel:
+   id: IDType = strawberry.field(
+        description="Publication ID"
+     )
+   
+   lastchange: datetime.datetime = strawberry.field(
+        description="Last change timestamp"
+        )
+   
+   name: typing.Optional[str] = strawberry.field(
+        description="Publication name assigned by an administrator",
+        default = None
+     )
+   
+   published_date: typing.Optional[datetime.datetime] = strawberry.field(
+          description="Date of publication",
+          default = None
+      )
+   
+   reference: typing.Optional[str] = strawberry.field(
+            description="Reference of the publication",
+            default = None
+        )
+   
+   place: typing.Optional[str] = strawberry.field(
+            description="Place of publication",
+            default = None
+        )
+   
+   changedby_id: strawberry.Private[IDType] = None
+
+@strawberry.input(
+   description= "Input type for deleting a Publication"
+   )
+
+class PublicationDeleteGQLModel:
+   id: IDType = strawberry.field(
+        description="Publication ID"
+     )
+   
+   lastchange: datetime.datetime = strawberry.field(
+        description="Last change timestamp"
+        )
+   
+@strawberry.interface(
+   description="Publication mutations"
+)
+
+class PublicationMutation:
+   @strawberry.mutation(
+      description="Insert a new publication",
+      permission_classes=[OnlyForAuthentized],
+      extensions=[UserAccessControlExtension[InsertError, PublicationGQLModel](
+                roles=[
+                    "administrátor", 
+                    # "personalista"
+                ]
+            ),
+            UserRoleProviderExtension[InsertError, PublicationGQLModel](),
+            # RbacProviderExtension[InsertError, PublicationGQLModel](),
+            # LoadDataExtension[InsertError, PublicationGQLModel](
+            #     getLoader=PublicationGQLModel.getLoader,
+                
+            # ),
+            RbacInsertProviderExtension[InsertError, PublicationGQLModel]()
+        ],
+   )
+
+   async def publication_insert(
+      self,
+      info: strawberry.Info,
+      publication: PublicationInsertGQLModel,
+    #   db_row: typing.Any,
+      rbacobject_id: IDType,
+      user_roles: typing.List[dict],
+   ) -> typing.Union[PublicationGQLModel, InsertError[PublicationGQLModel]]:
+      print("RBAC OBJECT ID:", rbacobject_id)
+      print("USER ROLES:", user_roles)
+      return await Insert[PublicationGQLModel].DoItSafeWay(info=info, entity=publication)
+     
+   
+
+   @strawberry.mutation(
+        description="""Update a Publication""",
+        permission_classes=[
+            OnlyForAuthentized
+            # SimpleUpdatePermission[EventGQLModel](roles=["administrátor"])
+        ],
+        extensions=[
+            # UpdatePermissionCheckRoleFieldExtension[GroupGQLModel](roles=["administrátor", "personalista"]),
+            UserAccessControlExtension[UpdateError, PublicationGQLModel](
+                roles=[
+                    "administrátor", 
+                    # "personalista"
+                ]
+            ),
+            UserRoleProviderExtension[UpdateError, PublicationGQLModel](),
+            RbacProviderExtension[UpdateError, PublicationGQLModel](),
+            LoadDataExtension[UpdateError, PublicationGQLModel]()
+        ],
+    )
+   
+   async def publication_update(
+      self,
+      info: strawberry.Info,
+      publication: PublicationUpdateGQLModel
+    ) -> typing.Union[PublicationGQLModel, UpdateError[PublicationGQLModel]]:
+        return await Update[PublicationGQLModel].DoItSafeWay(info=info, entity=publication)
+   
+   @strawberry.mutation(
+        description="""Delete a Publication""",
+        permission_classes=[
+            OnlyForAuthentized,
+            # SimpleDeletePermission[EventGQLModel](roles=["administrátor"])
+        ],
+        extensions=[
+             #UpdatePermissionCheckRoleFieldExtension[GroupGQLModel](roles=["administrátor", "personalista"]),
+           UserAccessControlExtension[DeleteError, PublicationGQLModel](
+                roles=[
+                    "administrátor", 
+                    # "personalista"
+                ]
+            ),
+            UserRoleProviderExtension[DeleteError, PublicationGQLModel](),
+            RbacProviderExtension[DeleteError, PublicationGQLModel](),
+            LoadDataExtension[DeleteError, PublicationGQLModel]()
+        ],
+    )   
+   async def publication_delete(
+        self,
+        info: strawberry.Info,
+        publication: PublicationDeleteGQLModel
+    ) -> typing.Optional[DeleteError[PublicationGQLModel]]:
+        return await Delete[PublicationGQLModel].DoItSafeWay(info=info, entity=publication)
+    
+   
+    
+
+   
