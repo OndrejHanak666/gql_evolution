@@ -162,7 +162,7 @@ class PublicationQuery:
 
 from uoishelpers.resolvers import TreeInputStructureMixin, InputModelMixin
 @strawberry.input(
-    description="""Input type for creating a Event"""
+    description="""Input type for creating a Publication"""
 )
 
 class PublicationInsertGQLModel(InputModelMixin):
@@ -264,7 +264,9 @@ class PublicationMutation:
             #     getLoader=PublicationGQLModel.getLoader,
                 
             # ),
-            RbacInsertProviderExtension[InsertError, PublicationGQLModel]()
+            RbacInsertProviderExtension[InsertError, PublicationGQLModel](
+                rbac_key_name="rbacobject_id"
+            ),
         ],
    )
 
@@ -305,7 +307,10 @@ class PublicationMutation:
    async def publication_update(
       self,
       info: strawberry.Info,
-      publication: PublicationUpdateGQLModel
+      publication: PublicationUpdateGQLModel,
+      db_row: typing.Any,
+      rbacobject_id: IDType,
+      user_roles: typing.List[dict],
     ) -> typing.Union[PublicationGQLModel, UpdateError[PublicationGQLModel]]:
         return await Update[PublicationGQLModel].DoItSafeWay(info=info, entity=publication)
    
@@ -331,7 +336,10 @@ class PublicationMutation:
    async def publication_delete(
         self,
         info: strawberry.Info,
-        publication: PublicationDeleteGQLModel
+        publication: PublicationDeleteGQLModel,
+        db_row: typing.Any,
+        rbacobject_id: IDType,
+        user_roles: typing.List[dict],
     ) -> typing.Optional[DeleteError[PublicationGQLModel]]:
         return await Delete[PublicationGQLModel].DoItSafeWay(info=info, entity=publication)
     
