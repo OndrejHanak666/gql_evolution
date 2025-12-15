@@ -130,4 +130,167 @@ class PublicationAuthorQuery:
     )
 
 
-   
+from uoishelpers.resolvers import TreeInputStructureMixin, InputModelMixin
+
+@strawberry.input(
+    description="""Input type for creating a PublicationAuthor"""
+)
+class PublicationAuthorInsertGQLModel(InputModelMixin):
+    getLoader = PublicationAuthorGQLModel.getLoader
+    user_id: typing.Optional[IDType] = strawberry.field(
+        description="ID of the associated user",
+        default=None
+    )
+
+    publication_id: typing.Optional[IDType] = strawberry.field(
+        description="ID of the associated publication",
+        default=None
+    )
+
+    order: typing.Optional[int] = strawberry.field(
+        description="Order of the author in the publication",
+        default=None
+    )
+
+    share: typing.Optional[float] = strawberry.field(
+        description="Share of the author in the publication",
+        default=None
+    )
+
+    id: typing.Optional[IDType] = strawberry.field(
+        description="PublicationAuthor ID",
+        default=None
+    )
+
+    rbacobject_id: strawberry.Private[IDType] = IDType("d75d64a4-bf5f-43c5-9c14-8fda7aff6c09")
+    createdby_id: strawberry.Private[IDType] = None
+
+
+@strawberry.input(
+    description="""Input type for updating a PublicationAuthor"""
+)
+class PublicationAuthorUpdateGQLModel:
+    id: IDType = strawberry.field(
+        description="PublicationAuthor ID"
+    )
+
+    lastchange: datetime.datetime = strawberry.field(
+        description="Last change timestamp"
+    )
+
+    user_id: typing.Optional[IDType] = strawberry.field(
+        description="ID of the associated user",
+        default=None
+    )
+
+    publication_id: typing.Optional[IDType] = strawberry.field(
+        description="ID of the associated publication",
+        default=None
+    )
+
+    order: typing.Optional[int] = strawberry.field(
+        description="Order of the author in the publication",
+        default=None
+    )
+
+    share: typing.Optional[float] = strawberry.field(
+        description="Share of the author in the publication",
+        default=None
+    )
+
+    changedby_id: strawberry.Private[IDType] = None
+
+
+@strawberry.input(
+    description="Input type for deleting a PublicationAuthor"
+)
+class PublicationAuthorDeleteGQLModel:
+    id: IDType = strawberry.field(
+        description="PublicationAuthor ID"
+    )
+
+    lastchange: datetime.datetime = strawberry.field(
+        description="Last change timestamp"
+    )
+
+
+@strawberry.interface(
+    description="PublicationAuthor mutations"
+)
+class PublicationAuthorMutation:
+    @strawberry.mutation(
+        description="Insert a new publication author",
+        permission_classes=[OnlyForAuthentized, SimpleInsertPermission[PublicationAuthorGQLModel](roles=["administrátor"])],
+        extensions=[UserAccessControlExtension[InsertError, PublicationAuthorGQLModel](
+                    roles=[
+                        "administrátor",
+                    ]
+                ),
+                UserRoleProviderExtension[InsertError, PublicationAuthorGQLModel](),
+                RbacInsertProviderExtension[InsertError, PublicationAuthorGQLModel](
+                    rbac_key_name="rbacobject_id"
+                ),
+            ],
+    )
+    async def publication_author_insert(
+        self,
+        info: strawberry.Info,
+        publication_author: PublicationAuthorInsertGQLModel,
+        rbacobject_id: IDType,
+        user_roles: typing.List[dict],
+    ) -> typing.Union[PublicationAuthorGQLModel, InsertError[PublicationAuthorGQLModel]]:
+        return await Insert[PublicationAuthorGQLModel].DoItSafeWay(info=info, entity=publication_author)
+
+    @strawberry.mutation(
+        description="""Update a PublicationAuthor""",
+        permission_classes=[
+            OnlyForAuthentized,
+            SimpleUpdatePermission[PublicationAuthorGQLModel](roles=["administrátor"])
+        ],
+        extensions=[
+            UserAccessControlExtension[UpdateError, PublicationAuthorGQLModel](
+                roles=[
+                    "administrátor",
+                ]
+            ),
+            UserRoleProviderExtension[UpdateError, PublicationAuthorGQLModel](),
+            RbacProviderExtension[UpdateError, PublicationAuthorGQLModel](),
+            LoadDataExtension[UpdateError, PublicationAuthorGQLModel]()
+        ],
+    )
+    async def publication_author_update(
+        self,
+        info: strawberry.Info,
+        publication_author: PublicationAuthorUpdateGQLModel,
+        db_row: typing.Any,
+        rbacobject_id: IDType,
+        user_roles: typing.List[dict],
+    ) -> typing.Union[PublicationAuthorGQLModel, UpdateError[PublicationAuthorGQLModel]]:
+        return await Update[PublicationAuthorGQLModel].DoItSafeWay(info=info, entity=publication_author)
+
+    @strawberry.mutation(
+        description="""Delete a PublicationAuthor""",
+        permission_classes=[
+            OnlyForAuthentized,
+            SimpleDeletePermission[PublicationAuthorGQLModel](roles=["administrátor"])
+        ],
+        extensions=[
+            UserAccessControlExtension[DeleteError, PublicationAuthorGQLModel](
+                roles=[
+                    "administrátor",
+                ]
+            ),
+            UserRoleProviderExtension[DeleteError, PublicationAuthorGQLModel](),
+            RbacProviderExtension[DeleteError, PublicationAuthorGQLModel](),
+            LoadDataExtension[DeleteError, PublicationAuthorGQLModel]()
+        ],
+    )
+    async def publication_author_delete(
+        self,
+        info: strawberry.Info,
+        publication_author: PublicationAuthorDeleteGQLModel,
+        db_row: typing.Any,
+        rbacobject_id: IDType,
+        user_roles: typing.List[dict],
+    ) -> typing.Optional[DeleteError[PublicationAuthorGQLModel]]:
+        return await Delete[PublicationAuthorGQLModel].DoItSafeWay(info=info, entity=publication_author)
