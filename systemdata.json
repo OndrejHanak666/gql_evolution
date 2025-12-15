@@ -574,7 +574,8 @@
             "id": "478bf500-a90d-411a-a5aa-5546475c3992",
             "category_id": "8b48ce1c-330d-4ba4-9779-065cf9fde5d9",
             "name": "Článek J",
-            "name_en": "Article J"
+            "name_en": "Article J",
+            "mastertype_id": null
         }
     ],
     "publication_authors": [

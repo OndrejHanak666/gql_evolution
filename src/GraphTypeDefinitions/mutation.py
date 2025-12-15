@@ -4,8 +4,9 @@ import strawberry
 from .EventGQLModel import EventMutation
 from .EventInvitationGQLModel import EventInvitationMutation
 from .PublicationGQLModel import PublicationMutation
+from .PublicationTypeGQLModel import PublicationTypeMutation
 
 @strawberry.type(description="""Type for mutation root""")
-class Mutation(EventMutation, EventInvitationMutation, PublicationMutation):
+class Mutation(EventMutation, EventInvitationMutation, PublicationMutation, PublicationTypeMutation):
     pass
 
