@@ -9,8 +9,8 @@
         "publications": [
             {
                 "id": "cb3c3978-e716-46ac-9a3b-bb8f9d806a46",
-                "created": "2025-12-15 09:10:47.857760",
-                "lastchange": "2025-12-15 09:10:47.857760",
+                "created": "2025-11-14 08:24:29.042096",
+                "lastchange": "2025-11-14 08:24:29.042096",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -24,8 +24,8 @@
             },
             {
                 "id": "e8b1962f-5494-40cf-9bd6-b7d700dfbd8e",
-                "created": "2025-12-15 09:10:47.857760",
-                "lastchange": "2025-12-15 09:10:47.857760",
+                "created": "2025-11-14 08:24:29.042096",
+                "lastchange": "2025-11-14 08:24:29.042096",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -39,8 +39,8 @@
             },
             {
                 "id": "b5cf7f26-5652-4fb2-b930-ecc959c005f4",
-                "created": "2025-12-15 09:10:47.857760",
-                "lastchange": "2025-12-15 09:10:47.857760",
+                "created": "2025-11-14 08:24:29.042096",
+                "lastchange": "2025-11-14 08:24:29.042096",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -58,8 +58,8 @@
         "publication_authors": [
             {
                 "id": "0d80595a-5838-44d3-8de2-f0e143df429c",
-                "created": "2025-12-15 09:10:47.885029",
-                "lastchange": "2025-12-15 09:10:47.885029",
+                "created": "2025-11-14 08:24:29.074339",
+                "lastchange": "2025-11-14 08:24:29.074339",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -71,8 +71,8 @@
             },
             {
                 "id": "0d80595f-5838-44d3-8de2-f0e143df429c",
-                "created": "2025-12-15 09:10:47.885029",
-                "lastchange": "2025-12-15 09:10:47.885029",
+                "created": "2025-11-14 08:24:29.074339",
+                "lastchange": "2025-11-14 08:24:29.074339",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -81,19 +81,6 @@
                 "publication_id": "cb3c3978-e716-46ac-9a3b-bb8f9d806a46",
                 "user_id": "6a6ca6e9-2222-498f-b270-b7b07c2afa41",
                 "_chunk": 0
-            },
-            {
-                "id": "fee28db2-2af0-4017-8268-cdb74101f1c2",
-                "created": "2025-12-15 10:01:29.022307",
-                "lastchange": "2025-12-15 10:01:29.022307",
-                "createdby_id": "51d101a0-81f1-44ca-8366-6cf51432e8d6",
-                "changedby_id": null,
-                "rbacobject_id": "d75d64a4-bf5f-43c5-9c14-8fda7aff6c09",
-                "order": 10,
-                "share": 1.5,
-                "publication_id": "cb3c3978-e716-46ac-9a3b-bb8f9d806a46",
-                "user_id": null,
-                "_chunk": 0
             }
         ]
     },
@@ -101,8 +88,8 @@
         "publicationtypes": [
             {
                 "id": "478bf500-a90d-411a-a5aa-5546475c3992",
-                "created": "2025-12-15 09:10:47.828326",
-                "lastchange": "2025-12-15 09:10:47.828326",
+                "created": "2025-11-14 08:24:29.010057",
+                "lastchange": "2025-11-14 08:24:29.010057",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -117,28 +104,13 @@
         "publicationcategories": [
             {
                 "id": "8b48ce1c-330d-4ba4-9779-065cf9fde5d9",
-                "created": "2025-12-15 09:10:47.799407",
-                "lastchange": "2025-12-15 09:10:47.799407",
+                "created": "2025-11-14 08:24:28.977409",
+                "lastchange": "2025-11-14 08:24:28.977409",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
                 "name": "Vědecké",
                 "name_en": "Scientic",
-                "_chunk": 0
-            }
-        ]
-    },
-    {
-        "publication_subjects": [
-            {
-                "id": "d4a960e9-d7e1-4139-a693-bed27bb46a05",
-                "created": "2025-12-15 09:10:47.910034",
-                "lastchange": "2025-12-15 09:10:47.910034",
-                "createdby_id": null,
-                "changedby_id": null,
-                "rbacobject_id": null,
-                "publication_id": "cb3c3978-e716-46ac-9a3b-bb8f9d806a46",
-                "subject_id": "ce250a68-b095-11ed-9bd8-0242ac110002",
                 "_chunk": 0
             }
         ]
