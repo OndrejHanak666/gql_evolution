@@ -111,16 +111,25 @@ Materializovaná cesta reprezentující umístění skupiny v hierarchii.""",
             # OnlyForAdmins
         ],
     )
-    def valid_(self) -> typing.Optional[bool]:
-     if self.valid is not None:
-        return self.valid
+    def valid_(self) -> bool:
+        # 1. Check explicit override from DB (self.valid maps to the column defined above)
+        if self.valid is not None:
+            return self.valid
 
-     now = datetime.datetime.now().date()  # dnešní datum bez času
-     if self.published_date:
-        # True pokud published_date je dnešní den
-         return self.published_date.date() <= now
+        # 2. Check if published_date exists
+        if self.published_date is None:
+            return False
 
-     return False
+        # 3. Date comparison logic
+        now = datetime.datetime.now().date()
+        
+        # Ensure we are comparing date to date (handle if self.published_date is datetime)
+        pub_date = self.published_date
+        if isinstance(pub_date, datetime.datetime):
+            pub_date = pub_date.date()
+
+        # True if published_date is today or earlier
+        return pub_date <= now
     
     place: typing.Optional[str] = strawberry.field(
         default=None,
@@ -161,6 +170,8 @@ class PublicationQuery:
 
 
 from uoishelpers.resolvers import TreeInputStructureMixin, InputModelMixin
+
+
 @strawberry.input(
     description="""Input type for creating a Publication"""
 )
@@ -313,6 +324,8 @@ class PublicationMutation:
       user_roles: typing.List[dict],
     ) -> typing.Union[PublicationGQLModel, UpdateError[PublicationGQLModel]]:
         return await Update[PublicationGQLModel].DoItSafeWay(info=info, entity=publication)
+   
+
    
    @strawberry.mutation(
         description="""Delete a Publication""",

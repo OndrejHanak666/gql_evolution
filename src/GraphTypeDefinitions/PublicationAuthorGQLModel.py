@@ -10,7 +10,8 @@ from uoishelpers.gqlpermissions import (
     SimpleInsertPermission, 
     SimpleUpdatePermission, 
     SimpleDeletePermission
-)    
+)
+from sqlalchemy import select, func, update    
 from uoishelpers.resolvers import (
     getLoadersFromInfo, 
     createInputs,
@@ -36,7 +37,7 @@ from uoishelpers.gqlpermissions.UserAbsoluteAccessControlExtension import UserAb
 
 from .BaseGQLModel import BaseGQLModel, IDType, Relation
 from .TimeUnit import TimeUnit
-
+from ..DBDefinitions import PublicationAuthorModel
 
 UserGQLModel = typing.Annotated["UserGQLModel", strawberry.lazy(".UserGQLModel")]
 PublicationGQLModel = typing.Annotated["PublicationGQLModel", strawberry.lazy(".PublicationGQLModel")]
@@ -142,19 +143,19 @@ class PublicationAuthorInsertGQLModel(InputModelMixin):
         default=None
     )
 
-    publication_id: typing.Optional[IDType] = strawberry.field(
+    """ publication_id: typing.Optional[IDType] = strawberry.field(
         description="ID of the associated publication",
         default=None
-    )
+    ) """
 
     order: typing.Optional[int] = strawberry.field(
         description="Order of the author in the publication",
-        default=None
+        default=1
     )
 
     share: typing.Optional[float] = strawberry.field(
         description="Share of the author in the publication",
-        default=None
+        default=0.1
     )
 
     id: typing.Optional[IDType] = strawberry.field(
@@ -162,8 +163,15 @@ class PublicationAuthorInsertGQLModel(InputModelMixin):
         default=None
     )
 
-    rbacobject_id: strawberry.Private[IDType] = IDType("d75d64a4-bf5f-43c5-9c14-8fda7aff6c09")
-    createdby_id: strawberry.Private[IDType] = None
+    rbacobject_id: typing.Optional[IDType] = strawberry.field(
+        description="ID for RBAC control",
+        default=IDType("d75d64a4-bf5f-43c5-9c14-8fda7aff6c09")
+    )
+    
+    createdby_id: typing.Optional[IDType] = strawberry.field(
+        default=None,
+        description="User who created this record"
+    )
 
 
 @strawberry.input(
@@ -183,10 +191,10 @@ class PublicationAuthorUpdateGQLModel:
         default=None
     )
 
-    publication_id: typing.Optional[IDType] = strawberry.field(
+    """ publication_id: typing.Optional[IDType] = strawberry.field(
         description="ID of the associated publication",
         default=None
-    )
+    ) """
 
     order: typing.Optional[int] = strawberry.field(
         description="Order of the author in the publication",
@@ -212,6 +220,32 @@ class PublicationAuthorDeleteGQLModel:
     lastchange: datetime.datetime = strawberry.field(
         description="Last change timestamp"
     )
+
+
+@strawberry.input(
+    description="Input type for adding an author to a publication"
+)
+class PublicationAddAuthorGQLModel:
+    publication_id: IDType = strawberry.field(
+        description="ID of the associated publication"
+    )
+
+    user_id: IDType = strawberry.field(
+        description="ID of the associated user"
+    )
+
+    order: typing.Optional[int] = strawberry.field(
+        description="Order of the author in the publication",
+        default=1
+    )
+
+    share: typing.Optional[float] = strawberry.field(
+        description="Share of the author in the publication",
+        default=0.1
+    )
+
+    rbacobject_id: strawberry.Private[IDType] = IDType("d75d64a4-bf5f-43c5-9c14-8fda7aff6c09")
+    createdby_id: strawberry.Private[IDType] = None
 
 
 @strawberry.interface(
@@ -245,7 +279,7 @@ class PublicationAuthorMutation:
         description="""Update a PublicationAuthor""",
         permission_classes=[
             OnlyForAuthentized,
-            SimpleUpdatePermission[PublicationAuthorGQLModel](roles=["administrátor"])
+            #SimpleUpdatePermission[PublicationAuthorGQLModel](roles=["administrátor"])
         ],
         extensions=[
             UserAccessControlExtension[UpdateError, PublicationAuthorGQLModel](
@@ -294,3 +328,70 @@ class PublicationAuthorMutation:
         user_roles: typing.List[dict],
     ) -> typing.Optional[DeleteError[PublicationAuthorGQLModel]]:
         return await Delete[PublicationAuthorGQLModel].DoItSafeWay(info=info, entity=publication_author)
+    
+
+    @strawberry.mutation(
+        description="Add an author to a publication",
+        permission_classes=[OnlyForAuthentized, SimpleInsertPermission[PublicationAuthorGQLModel](roles=["administrátor"])],
+        extensions=[UserAccessControlExtension[InsertError, PublicationAuthorGQLModel](
+                    roles=[
+                        "administrátor",
+                    ]
+                ),
+                UserRoleProviderExtension[InsertError, PublicationAuthorGQLModel](),
+                RbacInsertProviderExtension[InsertError, PublicationAuthorGQLModel](
+                    rbac_key_name="rbacobject_id"
+                ),
+            ],
+    )
+    async def publication_add_author(
+        self,
+        info: strawberry.Info,
+        publication_author: PublicationAddAuthorGQLModel,
+        rbacobject_id: IDType,
+        user_roles: typing.List[dict],
+    ) -> typing.Union[PublicationAuthorGQLModel, InsertError[PublicationAuthorGQLModel]]:
+        
+        session = info.context["session"]
+
+        # 1. Zjistíme aktuální stav (max order a počet lidí)
+        stmt = select(
+            func.max(PublicationAuthorModel.order),
+            func.count(PublicationAuthorModel.id)
+        ).where(PublicationAuthorModel.publication_id == publication_author.publication_id)
+
+        result = await session.execute(stmt)
+        row = result.one()
+        max_order = row[0] if row[0] is not None else 0
+        count = row[1] if row[1] is not None else 0
+
+        # 2. Vypočítáme nový férový podíl
+        # (počet lidí bude 'stávající + 1')
+        new_total_authors = count + 1
+        new_fair_share = round(1.0 / new_total_authors, 4)
+
+        # 3. Nastavíme hodnoty pro TOHOTO nového autora
+        if publication_author.order is None or publication_author.order == 1:
+            publication_author.order = max_order + 1
+        
+        # Nastavíme mu rovnou ten nový podíl
+        publication_author.share = new_fair_share
+
+        # 4. Provedeme VLOŽENÍ nového autora
+        result_gql = await Insert[PublicationAuthorGQLModel].DoItSafeWay(info=info, entity=publication_author)
+
+        # Pokud se vložení nepovedlo (vrátila se chyba), skončíme
+        if isinstance(result_gql, InsertError):
+            return result_gql
+
+        # 5. AKTUALIZACE VŠECH: Teď musíme opravit podíl i těm ostatním (starým) autorům
+        # Spustíme update nad celou skupinou autorů této publikace
+        stmt_update = update(PublicationAuthorModel).where(
+            PublicationAuthorModel.publication_id == publication_author.publication_id
+        ).values(share=new_fair_share)
+
+        await session.execute(stmt_update)
+        await session.commit()
+
+        # 6. Vrátíme nově vytvořeného autora
+        return result_gql
