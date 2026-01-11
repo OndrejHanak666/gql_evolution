@@ -9,8 +9,8 @@
         "publications": [
             {
                 "id": "cb3c3978-e716-46ac-9a3b-bb8f9d806a46",
-                "created": "2026-01-08 18:43:32.394506",
-                "lastchange": "2026-01-08 18:43:32.394506",
+                "created": "2026-01-11 20:18:47.245486",
+                "lastchange": "2026-01-11 20:18:47.245486",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -24,8 +24,8 @@
             },
             {
                 "id": "e8b1962f-5494-40cf-9bd6-b7d700dfbd8e",
-                "created": "2026-01-08 18:43:32.394506",
-                "lastchange": "2026-01-08 18:43:32.394506",
+                "created": "2026-01-11 20:18:47.245486",
+                "lastchange": "2026-01-11 20:18:47.245486",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -39,8 +39,8 @@
             },
             {
                 "id": "b5cf7f26-5652-4fb2-b930-ecc959c005f4",
-                "created": "2026-01-08 18:43:32.394506",
-                "lastchange": "2026-01-08 18:43:32.394506",
+                "created": "2026-01-11 20:18:47.245486",
+                "lastchange": "2026-01-11 20:18:47.245486",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -51,21 +51,6 @@
                 "place": "Prague",
                 "publication_type_id": "478bf500-a90d-411a-a5aa-5546475c3992",
                 "_chunk": 0
-            },
-            {
-                "id": "5fd503d1-99da-492f-87ff-95bf0becf15b",
-                "created": "2026-01-08 18:43:42.384097",
-                "lastchange": "2026-01-08 18:43:42.384097",
-                "createdby_id": "51d101a0-81f1-44ca-8366-6cf51432e8d6",
-                "changedby_id": null,
-                "rbacobject_id": "d75d64a4-bf5f-43c5-9c14-8fda7aff6c09",
-                "name": "test",
-                "published_date": null,
-                "reference": "www.google.com",
-                "valid": null,
-                "place": "Brno",
-                "publication_type_id": null,
-                "_chunk": 0
             }
         ]
     },
@@ -73,8 +58,8 @@
         "publication_authors": [
             {
                 "id": "0d80595a-5838-44d3-8de2-f0e143df429c",
-                "created": "2026-01-08 18:43:32.417807",
-                "lastchange": "2026-01-08 18:43:32.417807",
+                "created": "2026-01-11 20:18:47.266331",
+                "lastchange": "2026-01-11 20:18:47.266331",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -86,53 +71,14 @@
             },
             {
                 "id": "0d80595f-5838-44d3-8de2-f0e143df429c",
-                "created": "2026-01-08 18:43:32.417807",
-                "lastchange": "2026-01-08 18:43:32.417807",
+                "created": "2026-01-11 20:18:47.266331",
+                "lastchange": "2026-01-11 20:18:47.266331",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
                 "order": 2,
                 "share": 0.5,
                 "publication_id": "cb3c3978-e716-46ac-9a3b-bb8f9d806a46",
-                "user_id": "6a6ca6e9-2222-498f-b270-b7b07c2afa41",
-                "_chunk": 0
-            },
-            {
-                "id": "7063c748-dca2-4c6c-ba70-4b39f61ec99b",
-                "created": "2026-01-08 18:43:48.336877",
-                "lastchange": "2026-01-08 18:43:48.336877",
-                "createdby_id": "51d101a0-81f1-44ca-8366-6cf51432e8d6",
-                "changedby_id": null,
-                "rbacobject_id": "d75d64a4-bf5f-43c5-9c14-8fda7aff6c09",
-                "order": 1,
-                "share": 0.3333,
-                "publication_id": "5fd503d1-99da-492f-87ff-95bf0becf15b",
-                "user_id": "76dac14f-7114-4bb2-882d-0d762eab6f4a",
-                "_chunk": 0
-            },
-            {
-                "id": "cdf5a89e-0f72-4885-b636-05e01da3f877",
-                "created": "2026-01-08 18:44:28.933814",
-                "lastchange": "2026-01-08 18:44:28.933814",
-                "createdby_id": "51d101a0-81f1-44ca-8366-6cf51432e8d6",
-                "changedby_id": null,
-                "rbacobject_id": "d75d64a4-bf5f-43c5-9c14-8fda7aff6c09",
-                "order": 2,
-                "share": 0.3333,
-                "publication_id": "5fd503d1-99da-492f-87ff-95bf0becf15b",
-                "user_id": "51d101a0-81f1-44ca-8366-6cf51432e8d6",
-                "_chunk": 0
-            },
-            {
-                "id": "9ed70156-4229-4950-a1d3-4c283f799e84",
-                "created": "2026-01-08 18:44:48.655856",
-                "lastchange": "2026-01-08 18:44:48.655856",
-                "createdby_id": "51d101a0-81f1-44ca-8366-6cf51432e8d6",
-                "changedby_id": null,
-                "rbacobject_id": "d75d64a4-bf5f-43c5-9c14-8fda7aff6c09",
-                "order": 3,
-                "share": 0.3333,
-                "publication_id": "5fd503d1-99da-492f-87ff-95bf0becf15b",
                 "user_id": "6a6ca6e9-2222-498f-b270-b7b07c2afa41",
                 "_chunk": 0
             }
@@ -142,8 +88,8 @@
         "publicationtypes": [
             {
                 "id": "478bf500-a90d-411a-a5aa-5546475c3992",
-                "created": "2026-01-08 18:43:32.372356",
-                "lastchange": "2026-01-08 18:43:32.372356",
+                "created": "2026-01-11 20:18:47.225490",
+                "lastchange": "2026-01-11 20:18:47.225490",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -160,8 +106,8 @@
         "publicationcategories": [
             {
                 "id": "8b48ce1c-330d-4ba4-9779-065cf9fde5d9",
-                "created": "2026-01-08 18:43:32.352197",
-                "lastchange": "2026-01-08 18:43:32.352197",
+                "created": "2026-01-11 20:18:47.206919",
+                "lastchange": "2026-01-11 20:18:47.206919",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -175,8 +121,8 @@
         "publication_subjects": [
             {
                 "id": "d4a960e9-d7e1-4139-a693-bed27bb46a05",
-                "created": "2026-01-08 18:43:32.438362",
-                "lastchange": "2026-01-08 18:43:32.438362",
+                "created": "2026-01-11 20:18:47.285817",
+                "lastchange": "2026-01-11 20:18:47.285817",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,

@@ -1,4 +1,5 @@
 import aiohttp
+import uuid
 def createGQLClient():
 
     from fastapi import FastAPI
@@ -67,8 +68,106 @@ def createFederationClient(
 
 async def main():
     client = createFederationClient()
-    result = await client("{ publicationPage { id name place } }", {})
-    print(result)
+
+
+    # ==========================================
+    # 1. MUTACE: publicationInsert
+    # ==========================================
+    print("--- MUTATION: publicationInsert ---")
+    
+    # Vygenerujeme si unikátní ID, abychom mohli test pouštět opakovaně
+    new_pub_id = str(uuid.uuid4())
+    
+    # Definice mutace s proměnnými ($id, $name, ...)
+    # Všimni si, že přidávám i větev pro úspěch (např. ... on PublicationGQLModel), 
+    # aby ses dozvěděl výsledek, nejen chybu.
+    mutation_pub = """
+    mutation($id: UUID!, $name: String!, $place: String!, $ref: String!) {
+      publicationInsert(
+        publication: {id: $id, name: $name, place: $place, reference: $ref}
+      ) {
+        __typename
+        
+        # Co se vrátí při úspěchu (uprav podle svého modelu, asi to bude PublicationGQLModel)
+        ... on PublicationGQLModel {
+            id
+            lastchange
+            name
+        }
+
+        # Co se vrátí při chybě (tvůj příklad)
+        ... on PublicationGQLModelInsertError {
+          code
+          msg
+          failed
+        }
+      }
+    }
+    """
+
+    # Hodnoty proměnných
+    variables_pub = {
+        "id": new_pub_id,
+        "name": "Automatický Test",
+        "place": "Brno - Server",
+        "ref": "www.test.cz"
+    }
+
+    result_pub = await client(mutation_pub, variables_pub)
+    print(result_pub)
+    
+    # 1. Původní test: Publication Page
+    print("--- TEST: publicationPage ---")
+    query_pub = "{ publicationPage { id name place } }"
+    result_pub = await client(query_pub, {})
+    print(result_pub)
+
+    # 2. Nový test: Publication Author Page
+    # Předpokládám, že autoři mají jméno a příjmení
+    print("\n--- TEST: publicationAuthorPage ---")
+    query_author = """
+    query {
+        publicationAuthorsPage {
+            id
+            userId
+            publicationId
+            order
+            share
+        }
+    }
+    """
+    result_author = await client(query_author, {})
+    print(result_author)
+
+    # 3. Nový test: Publication Type Page
+    print("\n--- TEST: publicationTypePage ---")
+    query_type = """
+    query {
+        publicationTypePage {
+            id
+            name
+            nameEn
+            categoryId
+        }
+    }
+    """
+    result_type = await client(query_type, {})
+    print(result_type)
+
+    # 4. Nový test: Publication Category Page
+    print("\n--- TEST: publicationCategoryPage ---")
+    query_category = """
+    query {
+        publicationCategoryPage {
+            id
+            name
+            nameEn
+        }
+    }
+    """
+    result_category = await client(query_category, {})
+    print(result_category)
+    
 
 if __name__ == "__main__":
     
