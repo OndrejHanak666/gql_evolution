@@ -253,12 +253,22 @@ pytest --cov-report term-missing --cov=DBDefinitions --cov=GraphTypeDefinitions 
 ```
 
 to see all logs
-```
+```bash
 pytest --cov-report term-missing --cov=DBDefinitions --cov=GraphTypeDefinitions --cov=utils --log-cli-level=INFO
 ```
 
 To run code in development there is 
-```
+```bash
 uvicorn main:app --log-config=log_conf.yaml --env-file environment.txt --reload
 uvicorn main:app --env-file environment.txt --reload --port 8001
+```
+
+To run tests (after activating virtual environment):
+```bash
+pytest tests/test_client.py -v
+```
+
+```bash
+& ".\.venv\Scripts\Activate.ps1"
+pytest tests/test_client.py -v
 ```

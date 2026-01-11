@@ -29,7 +29,7 @@ async def prepare_in_memory_sqllite():
     return async_session_maker
 
 
-from utils.DBFeeder import get_demodata
+from DBFeeder import get_demodata
 
 
 async def prepare_demodata(async_session_maker):
@@ -46,7 +46,7 @@ async def prepare_demodata(async_session_maker):
     )
 
 
-from utils.Dataloaders import createLoadersContext
+from Dataloaders import createLoadersContext
 
 def createContext(asyncSessionMaker, withuser=True):
     loadersContext = createLoadersContext(asyncSessionMaker)

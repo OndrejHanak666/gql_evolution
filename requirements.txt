@@ -14,7 +14,7 @@ sqlalchemy_utils
 
 pydantic
 starlette
-strawberry-graphql==0.260.0
+strawberry-graphql==0.284.1
 aiodataloader
 pyjwt[crypto]
 
