@@ -45,6 +45,7 @@ class EventModel(BaseModel):
     
     place: Mapped[str] = mapped_column(default=None, nullable=True)
     facility_id: Mapped[IDType] = UUIDFKey(nullable=True)
+    sensitiveMsg: Mapped[str] = mapped_column(default=None, nullable=True)
 
     @hybrid_property
     def duration(self):

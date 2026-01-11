@@ -764,7 +764,8 @@
             "eventtype_id": "b87d3ff0-8fd4-11ed-a6d4-0242ac110002",
             
             "startdate": "2023-04-19T08:00:00", 
-            "enddate": "2023-04-19T09:00:00"
+            "enddate": "2023-04-19T09:00:00",
+            "sensitiveMsg": "sensitive information"
         }
     ],
     "events_users": [

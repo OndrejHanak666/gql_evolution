@@ -29,7 +29,7 @@ async def prepare_in_memory_sqllite():
     return async_session_maker
 
 
-from utils.DBFeeder import get_demodata
+from DBFeeder import get_demodata
 
 
 async def prepare_demodata(async_session_maker):
@@ -46,26 +46,36 @@ async def prepare_demodata(async_session_maker):
     )
 
 
-from utils.Dataloaders import createLoadersContext
+from Dataloaders import createLoadersContext
+
+
+def get_test_user():
+    """Get test user from systemdata.json"""
+    from uoishelpers.dataloaders import readJsonFile
+    jsonData = readJsonFile(jsonFileName="./systemdata.json")
+    users = jsonData.get("users", [])
+    return users[0] if users else None
+
 
 def createContext(asyncSessionMaker, withuser=True):
     loadersContext = createLoadersContext(asyncSessionMaker)
-    user = {
-        "id": "2d9dc5ca-a4a2-11ed-b9df-0242ac120003",
-        "name": "John",
-        "surname": "Newbie",
-        "email": "john.newbie@world.com"
-    }
-    if withuser:
+    user = get_test_user()
+    if withuser and user:
         loadersContext["user"] = user
     
     return loadersContext
 
 def createInfo(asyncSessionMaker, withuser=True):
+    user = get_test_user()
+    
     class Request():
         @property
         def headers(self):
             return {"Authorization": "Bearer 2d9dc5ca-a4a2-11ed-b9df-0242ac120003"}
+        
+        @property
+        def scope(self):
+            return {"user": user if withuser else None}
         
     class Info():
         @property

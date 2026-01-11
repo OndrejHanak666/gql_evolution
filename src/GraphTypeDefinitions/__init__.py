@@ -1,16 +1,20 @@
 import datetime
 import strawberry
+import warnings
 
 from .query import Query
 from .mutation import Mutation
 
-timedelta = strawberry.scalar(
-    # NewType("TimeDelta", float),
-    datetime.timedelta,
-    name="timedelta",
-    serialize=lambda v: v.total_seconds() / 60,
-    parse_value=lambda v: datetime.timedelta(minutes=v),
-)
+# Suppress the deprecation warning for strawberry.scalar
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore", DeprecationWarning)
+    timedelta = strawberry.scalar(
+        # NewType("TimeDelta", float),
+        datetime.timedelta,
+        name="timedelta",
+        serialize=lambda v: v.total_seconds() / 60,
+        parse_value=lambda v: datetime.timedelta(minutes=v),
+    )
 
 
 from .BaseGQLModel import Relation

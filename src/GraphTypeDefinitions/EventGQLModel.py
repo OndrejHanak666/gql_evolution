@@ -226,6 +226,14 @@ Materializovaná cesta reprezentující umístění skupiny v hierarchii.""",
         resolver=VectorResolver["EventInvitationGQLModel"](fkey_field_name="event_id", whereType=EventInvitationInputFilter)
     )
 
+    sensitiveMsg: typing.Optional[str] = strawberry.field(
+        default=None,
+        description="""Sensitive message visible only to authenticated users""",
+        permission_classes=[
+            OnlyForAuthentized
+        ]
+    )
+
 
 
 @strawberry.interface(
@@ -437,6 +445,10 @@ class EventUpdateGQLModel:
     )
     enddate: typing.Optional[datetime.datetime] = strawberry.field(
         description="""Event end date""",
+        default=None
+    )
+    sensitiveMsg: typing.Optional[str] = strawberry.field(
+        description="""Sensitive message visible only to authenticated users""",
         default=None
     )
     # parent_id: typing.Optional[IDType] = strawberry.field(
