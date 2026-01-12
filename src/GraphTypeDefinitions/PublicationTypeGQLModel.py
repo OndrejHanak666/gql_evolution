@@ -151,7 +151,7 @@ class PublicationTypeInsertGQLModel(TreeInputStructureMixin):
     name_en: typing.Optional[str] = strawberry.field(default=None)
     id: typing.Optional[IDType] = strawberry.field(default=None)
     subtypes: typing.Optional[typing.List["PublicationTypeInsertGQLModel"]] = strawberry.field(description="Subtypes to be inserted along with this publication type", default_factory=list)
-
+    mastertype_id: typing.Optional[IDType] = strawberry.field(default=None)
 
     path: strawberry.Private[str] = ""
     createdby_id: strawberry.Private["IDType"] = None
