@@ -265,7 +265,8 @@ class PublicationMutation:
       permission_classes=[OnlyForAuthentized],
       extensions=[UserAccessControlExtension[InsertError, PublicationGQLModel](
                 roles=[
-                    "administrátor", 
+                    "administrátor",
+                    "publication_manager",
                     # "personalista"
                 ]
             ),
@@ -305,7 +306,8 @@ class PublicationMutation:
             # UpdatePermissionCheckRoleFieldExtension[GroupGQLModel](roles=["administrátor", "personalista"]),
             UserAccessControlExtension[UpdateError, PublicationGQLModel](
                 roles=[
-                    "administrátor", 
+                    "administrátor",
+                    "publication_manager",
                     # "personalista"
                 ]
             ),
@@ -337,7 +339,8 @@ class PublicationMutation:
              #UpdatePermissionCheckRoleFieldExtension[GroupGQLModel](roles=["administrátor", "personalista"]),
            UserAccessControlExtension[DeleteError, PublicationGQLModel](
                 roles=[
-                    "administrátor", 
+                    "administrátor",
+                    "publication_manager",
                     # "personalista"
                 ]
             ),

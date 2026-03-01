@@ -37,7 +37,7 @@ from uoishelpers.gqlpermissions.UserAbsoluteAccessControlExtension import UserAb
 
 from .BaseGQLModel import BaseGQLModel, IDType, Relation
 from .TimeUnit import TimeUnit
-from ..DBDefinitions import PublicationAuthorModel
+from src.DBDefinitions import PublicationAuthorModel
 
 UserGQLModel = typing.Annotated["UserGQLModel", strawberry.lazy(".UserGQLModel")]
 PublicationGQLModel = typing.Annotated["PublicationGQLModel", strawberry.lazy(".PublicationGQLModel")]
@@ -258,6 +258,8 @@ class PublicationAuthorMutation:
         extensions=[UserAccessControlExtension[InsertError, PublicationAuthorGQLModel](
                     roles=[
                         "administrátor",
+                        "author_manager",
+                        "publication_manager",
                     ]
                 ),
                 UserRoleProviderExtension[InsertError, PublicationAuthorGQLModel](),
@@ -285,6 +287,8 @@ class PublicationAuthorMutation:
             UserAccessControlExtension[UpdateError, PublicationAuthorGQLModel](
                 roles=[
                     "administrátor",
+                    "author_manager",
+                    "publication_manager",
                 ]
             ),
             UserRoleProviderExtension[UpdateError, PublicationAuthorGQLModel](),
@@ -312,6 +316,8 @@ class PublicationAuthorMutation:
             UserAccessControlExtension[DeleteError, PublicationAuthorGQLModel](
                 roles=[
                     "administrátor",
+                    "author_manager",
+                    "publication_manager",
                 ]
             ),
             UserRoleProviderExtension[DeleteError, PublicationAuthorGQLModel](),
@@ -336,6 +342,8 @@ class PublicationAuthorMutation:
         extensions=[UserAccessControlExtension[InsertError, PublicationAuthorGQLModel](
                     roles=[
                         "administrátor",
+                        "author_manager",
+                        "publication_manager",
                     ]
                 ),
                 UserRoleProviderExtension[InsertError, PublicationAuthorGQLModel](),
