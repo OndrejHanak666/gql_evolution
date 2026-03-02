@@ -2,16 +2,18 @@ import sqlalchemy
 from sqlalchemy import select
 import sys
 import asyncio
+import os
 
-# # setting path
-#sys.path.append("..")
+# setting path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 import pytest
 
 # from ..uoishelpers.uuid import UUIDColumn
 
 from .shared import prepare_demodata, prepare_in_memory_sqllite, get_demodata
-from DBDefinitions import BaseModel, EventModel
+from src.DBDefinitions import BaseModel
+from src.DBDefinitions.EventDBModel import EventModel
 
 
 @pytest.mark.asyncio
@@ -24,7 +26,7 @@ async def test_load_demo_data():
     
 
 
-from DBDefinitions import ComposeConnectionString
+from src.DBDefinitions import ComposeConnectionString
 
 
 def test_connection_string():
@@ -34,7 +36,7 @@ def test_connection_string():
     assert "@" in connectionString
 
 
-from DBDefinitions import startEngine
+from src.DBDefinitions import startEngine
 
 
 @pytest.mark.asyncio
@@ -47,7 +49,7 @@ async def test_table_start_engine():
     assert async_session_maker is not None
 
 
-from DBFeeder import initDB
+from src.DBFeeder import initDB
 
 
 @pytest.mark.asyncio

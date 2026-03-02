@@ -266,9 +266,5 @@ uvicorn main:app --env-file environment.txt --reload --port 8001
 
 To run tests (after activating virtual environment):
 ```bash
-pytest tests/test_client.py -v
-```
-
-```bash
-python -m pytest tests/test_mutation.py -v -s
+ pytest tests/ -v
 ```
