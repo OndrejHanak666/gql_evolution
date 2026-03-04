@@ -352,6 +352,7 @@ class PublicationAuthorMutation:
         user_roles: typing.List[dict],
     ) -> typing.Union[PublicationAuthorGQLModel, InsertError[PublicationAuthorGQLModel]]:
         
+        # Session se bere z kontextu, kam ji vložila ta Extension
         session = info.context["session"]
 
         # 1. Zjistíme aktuální stav (max order a počet lidí)
@@ -366,7 +367,6 @@ class PublicationAuthorMutation:
         count = row[1] if row[1] is not None else 0
 
         # 2. Vypočítáme nový férový podíl
-        # (počet lidí bude 'stávající + 1')
         new_total_authors = count + 1
         new_fair_share = round(1.0 / new_total_authors, 4)
 
@@ -378,20 +378,25 @@ class PublicationAuthorMutation:
         publication_author.share = new_fair_share
 
         # 4. Provedeme VLOŽENÍ nového autora
+        # Předpokládáme, že DoItSafeWay používá session z info.context a NEDĚLÁ vlastní commit
         result_gql = await Insert[PublicationAuthorGQLModel].DoItSafeWay(info=info, entity=publication_author)
 
         # Pokud se vložení nepovedlo (vrátila se chyba), skončíme
+        # Extension uvidí, že jsme skončili bez vyhození výjimky, a pokusí se o commit.
+        # Protože ale Insert selhal, v DB se nic nezměnilo, takže commit prázdné transakce nevadí.
         if isinstance(result_gql, InsertError):
             return result_gql
 
         # 5. AKTUALIZACE VŠECH: Teď musíme opravit podíl i těm ostatním (starým) autorům
-        # Spustíme update nad celou skupinou autorů této publikace
         stmt_update = update(PublicationAuthorModel).where(
             PublicationAuthorModel.publication_id == publication_author.publication_id
         ).values(share=new_fair_share)
 
+        # Pouze přidáme operaci do session. NECOMMITUJEME.
         await session.execute(stmt_update)
-        await session.commit()
+        
+        # ZDE BYLA ZMĚNA: Odstraněno await session.commit()
+        # O commit se postará SessionCommitExtension v bloku "else: await session.commit()"
 
         # 6. Vrátíme nově vytvořeného autora
         return result_gql
