@@ -55,7 +55,10 @@ class PublicationAuthorInputFilter:
 
 @strawberry.federation.type(
     keys=["id"],
-    description="Entity representing a publication author")
+    description="""Entity representing a publication author.
+    This model links users to publications, defining their contribution through order and share attributes.
+    It manages authorship information including the author's position in the publication and their percentage contribution.
+    Entita reprezentující autora publikace s informacemi o pořadí a podílu na díle.""")
 class PublicationAuthorGQLModel(BaseGQLModel):
     @classmethod
     def getLoader(cls, info: strawberry.types.Info):
@@ -146,10 +149,10 @@ class PublicationAuthorUpdateGQLModel:
         description="Last change timestamp"
     )
 
-    user_id: typing.Optional[IDType] = strawberry.field(
+    """ user_id: typing.Optional[IDType] = strawberry.field(
         description="ID of the associated user",
         default=None
-    )
+    ) """
 
     """ publication_id: typing.Optional[IDType] = strawberry.field(
         description="ID of the associated publication",

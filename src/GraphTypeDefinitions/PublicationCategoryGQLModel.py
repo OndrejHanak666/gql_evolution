@@ -49,7 +49,11 @@ class PublicationCategoryInputFilter:
     
 @strawberry.federation.type(
     keys=["id"],
-    description="Entity representing a publication author")
+    description="""Entity representing a publication category.
+    This model defines categories for classifying publications into different scientific or academic domains.
+    Categories help organize publications by their field of study or discipline.
+    Includes multilingual support with Czech (name) and English (name_en) names.
+    Entita reprezentující kategorii publikace pro třídění podle vědeckých nebo akademických oborů.""")
 
 class PublicationCategoryGQLModel(BaseGQLModel):
     @classmethod
