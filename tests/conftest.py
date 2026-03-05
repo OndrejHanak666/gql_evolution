@@ -7,6 +7,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 # Suppress known deprecation warnings from dependencies
 warnings.filterwarnings("ignore", category=DeprecationWarning, module="strawberry.extensions.*")
+warnings.filterwarnings("ignore", category=DeprecationWarning, module="strawberry.fastapi.router")
 
 # Automatically set required environment variables for tests
 if not os.environ.get('DEMO'):

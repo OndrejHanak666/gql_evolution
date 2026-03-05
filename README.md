@@ -1,3 +1,67 @@
+## Vývoj Publikačního Systému
+Kompletní implementace systému pro správu publikací včetně autorů, kategorií a typů
+
+- `2026-03-04` `e0cbb38` Změna mutace pro publikační autory
+- `2026-01-12` `b91c74c` Implementace master type pro typy publikací
+- `2026-01-05` `33068a4` Přidání mutací pro publikace
+- `2025-12-15` `59ad5a6` Funkční mutace pro typy publikací
+- `2025-12-15` `11aa07b` Implementace mutací pro autory
+- `2025-11-10` `ecd01fe` Refaktoring modelů publikací a GQL definic; přidání PublicationSubjectModel a SubjectGQLModel
+- `2025-10-28` `16577d7` Dokončení PublicationCategoryModel
+- `2025-10-24` `6816f42` Funkční PublicationTypeGQLModel
+- `2025-10-20` `65dd13c` Fungující publikace a autoři
+
+## Testování
+Komplexní testovací pokrytí pro mutace a GraphQL operace
+
+- `2026-03-02` `1a7ce49` Nové testy
+- `2026-03-01` `36ac8e2` Aktualizace README a oprávnění v GQL modelech; testy pro publikační autory
+- `2026-01-12` `24d5a8c` Přidání testů pro publikační mutace v client.py
+- `2026-01-12` `6141650` Testování mutací
+- `2026-01-11` `69c7884` Testování funkcionalit
+- `2026-01-11` `5252a1b` Testování vol.2
+- `2026-01-11` `f28437d` Testování vol.1
+- `2025-11-24` `4572f83` Rozšíření testů
+- `2025-10-28` `a58963f` Test latest větve
+- `2025-10-15` `4280c2a` Třetí commit - ještě neotestováno
+- `2025-10-03` `6be8066` Test step_02
+- `2025-10-03` `3f6b00c` Test step_01
+
+## CRUD Operace & Mutace
+Implementace create, update a delete operací
+
+- `2026-01-08` `b05e2c3` Přidání mutace pro autory
+- `2025-11-24` `8143176` Funkční insert, update a delete operace
+- `2025-11-14` `77f0c46` Implementace mutací
+
+## Docker & CI/CD
+Kontejnerizace a automatické nasazení
+
+- `2026-03-05` `dc5ba67` Oprava docker-publish
+- `2026-03-05` `f2919f8` Vytvoření Dockerfile pro Python aplikaci s testováním
+- `2026-03-05` `4ef37ca` Přidání GitHub Actions workflow pro publikování Docker image
+- `2026-03-05` `9c513f7` Vytvoření docker-publish.yaml
+
+## Správa Uživatelů & Rolí
+Rozšíření uživatelského systému
+
+- `2026-03-05` `245cd21` Přidání rolí pro Ester a Olivera
+- `2026-03-05` `44464b7` Přidání dalších uživatelů
+- `2026-03-05` `1566d8b` Odstranění události
+
+## Infrastruktura & Utility
+Základní nástroje a propojení systému
+
+- `2025-11-24` `5489539` Přidání utility pro zpracování datetime
+- `2025-11-10` `1e3f49e` Integrace datetime utilit do inicializace dat
+- `2025-11-10` `6d27fb3` Aktualizace dokumentace
+- `2025-11-03` `691357c` Propojení jednotlivých modelů
+- `2026-01-05` `9fa962c` Vyřešení konfliktů a merge změn
+- `2026-01-05` `75fea58` Aktualizace zálohy systémových dat
+
+---
+
+<!-- 
 ## Step 11
 
 This step extends GQL federation entities.
