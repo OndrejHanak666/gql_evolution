@@ -43,8 +43,4 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-<<<<<<< HEAD
           labels: ${{ steps.meta.outputs.labels }}
-=======
-          labels: ${{ steps.meta.outputs.labels }}
->>>>>>> f2919f8b2543e81255abb21d1ecc309f3077ce40
