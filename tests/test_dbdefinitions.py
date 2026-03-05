@@ -13,7 +13,6 @@ import pytest
 
 from .shared import prepare_demodata, prepare_in_memory_sqllite, get_demodata
 from src.DBDefinitions import BaseModel
-from src.DBDefinitions.EventDBModel import EventModel
 
 
 @pytest.mark.asyncio
