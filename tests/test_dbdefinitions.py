@@ -13,14 +13,17 @@ import pytest
 
 from .shared import prepare_demodata, prepare_in_memory_sqllite, get_demodata
 from src.DBDefinitions import BaseModel
+from src.DBDefinitions.PublicationModel import PublicationModel
+from src.DBDefinitions.PublicationAuthorModel import PublicationAuthorModel
+from src.DBDefinitions.PublicationTypeModel import PublicationTypeModel
+from src.DBDefinitions.PublicationCategoryModel import PublicationCategoryModel
 
 
 @pytest.mark.asyncio
 async def test_load_demo_data():
     async_session_maker = await prepare_in_memory_sqllite()
     await prepare_demodata(async_session_maker)
-
-    #data = get_demodata()
+    data = get_demodata()
 
     
 

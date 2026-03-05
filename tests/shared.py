@@ -9,7 +9,7 @@ import pytest
 
 # from ..uoishelpers.uuid import UUIDColumn
 
-from DBDefinitions import BaseModel
+from DBDefinitions import BaseModel, PublicationModel, PublicationAuthorModel, PublicationTypeModel, PublicationCategoryModel, PublicationSubjectModel
 
 
 async def prepare_in_memory_sqllite():
@@ -40,6 +40,11 @@ async def prepare_demodata(async_session_maker):
     await ImportModels(
         async_session_maker,
         [
+            PublicationModel,
+            PublicationAuthorModel,
+            PublicationTypeModel,
+            PublicationCategoryModel,
+            PublicationSubjectModel
         ],
         data,
     )

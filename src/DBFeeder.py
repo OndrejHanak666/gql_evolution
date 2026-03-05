@@ -13,7 +13,10 @@ from src.DBDefinitions import (
     PublicationSubjectModel
 )
 
-get_demodata = lambda :readJsonFile(jsonFileName="./systemdata.json")
+def get_demodata():
+    jsonData = readJsonFile(jsonFileName="./systemdata.json")
+    return process_json_data(jsonData)
+
 async def initDB(asyncSessionMaker, filename="./systemdata.json"):
 
     dbModels = [
