@@ -54,7 +54,11 @@ class PublicationTypeInputFilter:
 
 @strawberry.federation.type(
     keys=["id"],
-    description="Entity representing a publication type"
+    description="""Entity representing a publication type.
+    This model defines the type of publication such as journal article, conference paper, book chapter, etc.
+    It provides classification for publications based on their format and publication medium.
+    Links to publication categories and master types for hierarchical organization.
+    Entita reprezentující typ publikace (článek, konferenční příspěvek, kapitola knihy, atd.)."""
 )
 
 

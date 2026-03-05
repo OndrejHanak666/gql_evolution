@@ -57,7 +57,10 @@ class PublicationInputFilter:
 
 @strawberry.federation.type(
     keys=["id"],
-    description="Entity representing a publication"  ###TODO i u dalsich modelu
+    description="""Entity representing a scientific or academic publication.
+    This model manages all information about publications including metadata, authorship, categorization, and relationships.
+    It serves as the central entity for tracking publications, their authors, subjects, types, and categories.
+    Entita reprezentující vědeckou či akademickou publikaci s kompletními metadaty a vazbami."""
 )
 class PublicationGQLModel(BaseGQLModel):
     @classmethod
@@ -270,7 +273,7 @@ class PublicationMutation:
       extensions=[UserAccessControlExtension[InsertError, PublicationGQLModel](
                 roles=[
                     "administrátor",
-                    "publication_manager",
+                    "správce publikací",
                     # "personalista"
                 ]
             ),
@@ -308,7 +311,7 @@ class PublicationMutation:
             UserAccessControlExtension[UpdateError, PublicationGQLModel](
                 roles=[
                     "administrátor",
-                    "publication_manager",
+                    "správce publikací",
                     # "personalista"
                 ]
             ),
@@ -341,7 +344,7 @@ class PublicationMutation:
            UserAccessControlExtension[DeleteError, PublicationGQLModel](
                 roles=[
                     "administrátor",
-                    "publication_manager",
+                    "správce publikací",
                     # "personalista"
                 ]
             ),

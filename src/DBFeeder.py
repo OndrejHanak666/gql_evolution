@@ -6,8 +6,6 @@ from uoishelpers.dataloaders import readJsonFile
 from src.Utils.datetime_parser import process_json_data
 
 from src.DBDefinitions import (
-    EventModel, 
-    EventInvitationModel,
     PublicationModel,
     PublicationAuthorModel,
     PublicationTypeModel,
@@ -25,8 +23,6 @@ async def initDB(asyncSessionMaker, filename="./systemdata.json"):
     if isDemo:
         print("Demo mode", flush=True)
         dbModels = [
-            EventModel, 
-            EventInvitationModel,
             PublicationCategoryModel,
             PublicationTypeModel,
             PublicationModel,
@@ -49,8 +45,6 @@ async def backupDB(asyncSessionMaker, filename="./systemdata.backup.json"):
     from src.DBDefinitions.BaseModel import IDType
 
     dbModels = [
-        EventModel, 
-        EventInvitationModel,
         PublicationModel,
         PublicationAuthorModel,
         PublicationTypeModel,
