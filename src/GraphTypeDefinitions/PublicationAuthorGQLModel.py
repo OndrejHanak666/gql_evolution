@@ -133,46 +133,6 @@ class PublicationAuthorQuery:
 
 from uoishelpers.resolvers import TreeInputStructureMixin, InputModelMixin
 
-@strawberry.input(
-    description="""Input type for creating a PublicationAuthor"""
-)
-class PublicationAuthorInsertGQLModel(InputModelMixin):
-    getLoader = PublicationAuthorGQLModel.getLoader
-    user_id: typing.Optional[IDType] = strawberry.field(
-        description="ID of the associated user",
-        default=None
-    )
-
-    """ publication_id: typing.Optional[IDType] = strawberry.field(
-        description="ID of the associated publication",
-        default=None
-    ) """
-
-    order: typing.Optional[int] = strawberry.field(
-        description="Order of the author in the publication",
-        default=1
-    )
-
-    share: typing.Optional[float] = strawberry.field(
-        description="Share of the author in the publication",
-        default=0.1
-    )
-
-    id: typing.Optional[IDType] = strawberry.field(
-        description="PublicationAuthor ID",
-        default=None
-    )
-
-    rbacobject_id: typing.Optional[IDType] = strawberry.field(
-        description="ID for RBAC control",
-        default=IDType("d75d64a4-bf5f-43c5-9c14-8fda7aff6c09")
-    )
-    
-    createdby_id: typing.Optional[IDType] = strawberry.field(
-        default=None,
-        description="User who created this record"
-    )
-
 
 @strawberry.input(
     description="""Input type for updating a PublicationAuthor"""
@@ -255,30 +215,6 @@ class PublicationAddAuthorGQLModel:
     description="PublicationAuthor mutations"
 )
 class PublicationAuthorMutation:
-    @strawberry.mutation(
-        description="Insert a new publication author",
-        permission_classes=[OnlyForAuthentized, SimpleInsertPermission[PublicationAuthorGQLModel](roles=["administrátor"])],
-        extensions=[UserAccessControlExtension[InsertError, PublicationAuthorGQLModel](
-                    roles=[
-                        "administrátor",
-                        "author_manager",
-                        "publication_manager",
-                    ]
-                ),
-                UserRoleProviderExtension[InsertError, PublicationAuthorGQLModel](),
-                RbacInsertProviderExtension[InsertError, PublicationAuthorGQLModel](
-                    rbac_key_name="rbacobject_id"
-                ),
-            ],
-    )
-    async def publication_author_insert(
-        self,
-        info: strawberry.Info,
-        publication_author: PublicationAuthorInsertGQLModel,
-        rbacobject_id: IDType,
-        user_roles: typing.List[dict],
-    ) -> typing.Union[PublicationAuthorGQLModel, InsertError[PublicationAuthorGQLModel]]:
-        return await Insert[PublicationAuthorGQLModel].DoItSafeWay(info=info, entity=publication_author)
 
     @strawberry.mutation(
         description="""Update a PublicationAuthor""",
@@ -313,7 +249,6 @@ class PublicationAuthorMutation:
         description="""Delete a PublicationAuthor""",
         permission_classes=[
             OnlyForAuthentized,
-            SimpleDeletePermission[PublicationAuthorGQLModel](roles=["administrátor"])
         ],
         extensions=[
             UserAccessControlExtension[DeleteError, PublicationAuthorGQLModel](
@@ -341,7 +276,7 @@ class PublicationAuthorMutation:
 
     @strawberry.mutation(
         description="Add an author to a publication",
-        permission_classes=[OnlyForAuthentized, SimpleInsertPermission[PublicationAuthorGQLModel](roles=["administrátor"])],
+        permission_classes=[OnlyForAuthentized],
         extensions=[UserAccessControlExtension[InsertError, PublicationAuthorGQLModel](
                     roles=[
                         "administrátor",

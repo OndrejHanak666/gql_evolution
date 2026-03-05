@@ -204,7 +204,10 @@ class PublicationInsertGQLModel(InputModelMixin):
         default = None
      )
    
-   rbacobject_id: strawberry.Private[IDType] = None 
+   rbacobject_id: IDType = strawberry.field(
+        description="""Definitoin of access control"""
+    )
+   
    createdby_id: strawberry.Private[IDType] = None
 
 
@@ -290,28 +293,6 @@ class PublicationMutation:
     rbacobject_id: IDType,
     user_roles: typing.List[dict],
 ) -> typing.Union[PublicationGQLModel, InsertError[PublicationGQLModel]]:
-    
-    # 1. Získej ID uživatele z kontextu
-    user = info.context.get("user", {})
-    user_id = user.get("id")
-
-    # 2. VNUŤ TO TAM: 
-    # Protože uoishelpers často používají dataclasses, nejbezpečnější je 
-    # vytvořit novou instanci nebo použít dataclasses.replace, 
-    # ale úplně nejjednodušší v tomto frameworku bývá toto:
-    
-    publication.rbacobject_id = rbacobject_id
-    publication.createdby_id = user_id
-
-    # Pokud to pořád hází chybu, Insert.DoItSafeWay se pravděpodobně dívá 
-    # přímo na to, co přišlo z GraphQL. Zkus tohle "dirty" řešení:
-    if rbacobject_id is None:
-        # Pokud je None, tak ho zkusíme vzít z uživatele (jako fallback)
-        publication.rbacobject_id = user_id
-    
-    # Tady si to vytiskni, jestli to v tom objektu fakt je
-    print(f"DEBUG: publication rbac is {publication.rbacobject_id}")
-
     return await Insert[PublicationGQLModel].DoItSafeWay(info=info, entity=publication)
      
    

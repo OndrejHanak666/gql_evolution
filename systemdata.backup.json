@@ -9,8 +9,8 @@
         "publications": [
             {
                 "id": "cb3c3978-e716-46ac-9a3b-bb8f9d806a46",
-                "created": "2026-03-05 09:55:20.414411",
-                "lastchange": "2026-03-05 09:55:20.414411",
+                "created": "2026-03-05 12:45:44.509638",
+                "lastchange": "2026-03-05 12:45:44.509638",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -24,8 +24,8 @@
             },
             {
                 "id": "e8b1962f-5494-40cf-9bd6-b7d700dfbd8e",
-                "created": "2026-03-05 09:55:20.414411",
-                "lastchange": "2026-03-05 09:55:20.414411",
+                "created": "2026-03-05 12:45:44.509638",
+                "lastchange": "2026-03-05 12:45:44.509638",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -39,8 +39,8 @@
             },
             {
                 "id": "b5cf7f26-5652-4fb2-b930-ecc959c005f4",
-                "created": "2026-03-05 09:55:20.414411",
-                "lastchange": "2026-03-05 09:55:20.414411",
+                "created": "2026-03-05 12:45:44.509638",
+                "lastchange": "2026-03-05 12:45:44.509638",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -58,8 +58,8 @@
         "publication_authors": [
             {
                 "id": "0d80595a-5838-44d3-8de2-f0e143df429c",
-                "created": "2026-03-05 09:55:20.441475",
-                "lastchange": "2026-03-05 09:55:20.441475",
+                "created": "2026-03-05 12:45:44.536687",
+                "lastchange": "2026-03-05 12:45:44.536687",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -71,8 +71,8 @@
             },
             {
                 "id": "0d80595f-5838-44d3-8de2-f0e143df429c",
-                "created": "2026-03-05 09:55:20.441475",
-                "lastchange": "2026-03-05 09:55:20.441475",
+                "created": "2026-03-05 12:45:44.536687",
+                "lastchange": "2026-03-05 12:45:44.536687",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -88,8 +88,8 @@
         "publicationtypes": [
             {
                 "id": "478bf500-a90d-411a-a5aa-5546475c3992",
-                "created": "2026-03-05 09:55:20.386506",
-                "lastchange": "2026-03-05 09:55:20.386506",
+                "created": "2026-03-05 12:45:44.483229",
+                "lastchange": "2026-03-05 12:45:44.483229",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -106,8 +106,8 @@
         "publicationcategories": [
             {
                 "id": "8b48ce1c-330d-4ba4-9779-065cf9fde5d9",
-                "created": "2026-03-05 09:55:20.361573",
-                "lastchange": "2026-03-05 09:55:20.361573",
+                "created": "2026-03-05 12:45:44.458413",
+                "lastchange": "2026-03-05 12:45:44.458413",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -121,8 +121,8 @@
         "publication_subjects": [
             {
                 "id": "d4a960e9-d7e1-4139-a693-bed27bb46a05",
-                "created": "2026-03-05 09:55:20.470405",
-                "lastchange": "2026-03-05 09:55:20.470405",
+                "created": "2026-03-05 12:45:44.563757",
+                "lastchange": "2026-03-05 12:45:44.563757",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
