@@ -229,8 +229,8 @@ class PublicationAuthorMutation:
             UserAccessControlExtension[UpdateError, PublicationAuthorGQLModel](
                 roles=[
                     "administrátor",
-                    "author_manager",
-                    "publication_manager",
+                    "správce autorů",
+                    "správce publikací",
                 ]
             ),
             UserRoleProviderExtension[UpdateError, PublicationAuthorGQLModel](),
@@ -257,8 +257,8 @@ class PublicationAuthorMutation:
             UserAccessControlExtension[DeleteError, PublicationAuthorGQLModel](
                 roles=[
                     "administrátor",
-                    "author_manager",
-                    "publication_manager",
+                    "správce autorů",
+                    "správce publikací",
                 ]
             ),
             UserRoleProviderExtension[DeleteError, PublicationAuthorGQLModel](),
@@ -283,8 +283,8 @@ class PublicationAuthorMutation:
         extensions=[UserAccessControlExtension[InsertError, PublicationAuthorGQLModel](
                     roles=[
                         "administrátor",
-                        "author_manager",
-                        "publication_manager",
+                        "správce autorů",
+                        "správce publikací",
                     ]
                 ),
                 UserRoleProviderExtension[InsertError, PublicationAuthorGQLModel](),

@@ -273,7 +273,7 @@ class PublicationMutation:
       extensions=[UserAccessControlExtension[InsertError, PublicationGQLModel](
                 roles=[
                     "administrátor",
-                    "publication_manager",
+                    "správce publikací",
                     # "personalista"
                 ]
             ),
@@ -311,7 +311,7 @@ class PublicationMutation:
             UserAccessControlExtension[UpdateError, PublicationGQLModel](
                 roles=[
                     "administrátor",
-                    "publication_manager",
+                    "správce publikací",
                     # "personalista"
                 ]
             ),
@@ -344,7 +344,7 @@ class PublicationMutation:
            UserAccessControlExtension[DeleteError, PublicationGQLModel](
                 roles=[
                     "administrátor",
-                    "publication_manager",
+                    "správce publikací",
                     # "personalista"
                 ]
             ),

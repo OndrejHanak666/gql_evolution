@@ -3,8 +3,8 @@
         "publications": [
             {
                 "id": "cb3c3978-e716-46ac-9a3b-bb8f9d806a46",
-                "created": "2026-03-05 20:05:53.658152",
-                "lastchange": "2026-03-05 20:05:53.658152",
+                "created": "2026-03-05 20:34:45.473704",
+                "lastchange": "2026-03-05 20:34:45.473704",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -18,8 +18,8 @@
             },
             {
                 "id": "e8b1962f-5494-40cf-9bd6-b7d700dfbd8e",
-                "created": "2026-03-05 20:05:53.658152",
-                "lastchange": "2026-03-05 20:05:53.658152",
+                "created": "2026-03-05 20:34:45.473704",
+                "lastchange": "2026-03-05 20:34:45.473704",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -33,8 +33,8 @@
             },
             {
                 "id": "b5cf7f26-5652-4fb2-b930-ecc959c005f4",
-                "created": "2026-03-05 20:05:53.658152",
-                "lastchange": "2026-03-05 20:05:53.658152",
+                "created": "2026-03-05 20:34:45.473704",
+                "lastchange": "2026-03-05 20:34:45.473704",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -52,8 +52,8 @@
         "publication_authors": [
             {
                 "id": "0d80595a-5838-44d3-8de2-f0e143df429c",
-                "created": "2026-03-05 20:05:53.678077",
-                "lastchange": "2026-03-05 20:05:53.678077",
+                "created": "2026-03-05 20:34:45.491026",
+                "lastchange": "2026-03-05 20:34:45.491026",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -65,8 +65,8 @@
             },
             {
                 "id": "0d80595f-5838-44d3-8de2-f0e143df429c",
-                "created": "2026-03-05 20:05:53.678077",
-                "lastchange": "2026-03-05 20:05:53.678077",
+                "created": "2026-03-05 20:34:45.491026",
+                "lastchange": "2026-03-05 20:34:45.491026",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -75,6 +75,19 @@
                 "publication_id": "cb3c3978-e716-46ac-9a3b-bb8f9d806a46",
                 "user_id": "6a6ca6e9-2222-498f-b270-b7b07c2afa41",
                 "_chunk": 0
+            },
+            {
+                "id": "4dadc0fb-cf62-47b0-a2c6-8f75985d591b",
+                "created": "2026-03-05 20:37:51.937589",
+                "lastchange": "2026-03-05 20:37:51.937589",
+                "createdby_id": "6a6ca6e9-2222-498f-b270-b7b07c2afa41",
+                "changedby_id": null,
+                "rbacobject_id": "d75d64a4-bf5f-43c5-9c14-8fda7aff6c09",
+                "order": 1,
+                "share": 1.0,
+                "publication_id": "b5cf7f26-5652-4fb2-b930-ecc959c005f4",
+                "user_id": "3ca2c2cf-28bc-4855-8936-3bafe8c94b7c",
+                "_chunk": 0
             }
         ]
     },
@@ -82,8 +95,8 @@
         "publicationtypes": [
             {
                 "id": "478bf500-a90d-411a-a5aa-5546475c3992",
-                "created": "2026-03-05 20:05:53.638546",
-                "lastchange": "2026-03-05 20:05:53.638546",
+                "created": "2026-03-05 20:34:45.455057",
+                "lastchange": "2026-03-05 20:34:45.455057",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -100,8 +113,8 @@
         "publicationcategories": [
             {
                 "id": "8b48ce1c-330d-4ba4-9779-065cf9fde5d9",
-                "created": "2026-03-05 20:05:53.618478",
-                "lastchange": "2026-03-05 20:05:53.618478",
+                "created": "2026-03-05 20:34:45.434863",
+                "lastchange": "2026-03-05 20:34:45.434863",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
@@ -115,8 +128,8 @@
         "publication_subjects": [
             {
                 "id": "d4a960e9-d7e1-4139-a693-bed27bb46a05",
-                "created": "2026-03-05 20:05:53.698143",
-                "lastchange": "2026-03-05 20:05:53.698143",
+                "created": "2026-03-05 20:34:45.507339",
+                "lastchange": "2026-03-05 20:34:45.507339",
                 "createdby_id": null,
                 "changedby_id": null,
                 "rbacobject_id": null,
