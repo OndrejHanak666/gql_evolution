@@ -2,6 +2,7 @@ import asyncio
 import dataclasses
 import datetime
 import typing
+from numpy import info
 import strawberry
 
 import strawberry.types
@@ -56,7 +57,7 @@ class PublicationInputFilter:
 
 @strawberry.federation.type(
     keys=["id"],
-    description="Entity representing a publication"
+    description="Entity representing a publication"  ###TODO i u dalsich modelu
 )
 class PublicationGQLModel(BaseGQLModel):
     @classmethod
@@ -203,7 +204,7 @@ class PublicationInsertGQLModel(InputModelMixin):
         default = None
      )
    
-   rbacobject_id: strawberry.Private[IDType] = IDType("d75d64a4-bf5f-43c5-9c14-8fda7aff6c09")
+   rbacobject_id: strawberry.Private[IDType] = None 
    createdby_id: strawberry.Private[IDType] = None
 
 
@@ -265,7 +266,8 @@ class PublicationMutation:
       permission_classes=[OnlyForAuthentized],
       extensions=[UserAccessControlExtension[InsertError, PublicationGQLModel](
                 roles=[
-                    "administrátor", 
+                    "administrátor",
+                    "publication_manager",
                     # "personalista"
                 ]
             ),
@@ -282,16 +284,35 @@ class PublicationMutation:
    )
 
    async def publication_insert(
-      self,
-      info: strawberry.Info,
-      publication: PublicationInsertGQLModel,
-    #   db_row: typing.Any,
-      rbacobject_id: IDType,
-      user_roles: typing.List[dict],
-   ) -> typing.Union[PublicationGQLModel, InsertError[PublicationGQLModel]]:
-      print("RBAC OBJECT ID:", rbacobject_id)
-      print("USER ROLES:", user_roles)
-      return await Insert[PublicationGQLModel].DoItSafeWay(info=info, entity=publication)
+    self,
+    info: strawberry.Info,
+    publication: PublicationInsertGQLModel,
+    rbacobject_id: IDType,
+    user_roles: typing.List[dict],
+) -> typing.Union[PublicationGQLModel, InsertError[PublicationGQLModel]]:
+    
+    # 1. Získej ID uživatele z kontextu
+    user = info.context.get("user", {})
+    user_id = user.get("id")
+
+    # 2. VNUŤ TO TAM: 
+    # Protože uoishelpers často používají dataclasses, nejbezpečnější je 
+    # vytvořit novou instanci nebo použít dataclasses.replace, 
+    # ale úplně nejjednodušší v tomto frameworku bývá toto:
+    
+    publication.rbacobject_id = rbacobject_id
+    publication.createdby_id = user_id
+
+    # Pokud to pořád hází chybu, Insert.DoItSafeWay se pravděpodobně dívá 
+    # přímo na to, co přišlo z GraphQL. Zkus tohle "dirty" řešení:
+    if rbacobject_id is None:
+        # Pokud je None, tak ho zkusíme vzít z uživatele (jako fallback)
+        publication.rbacobject_id = user_id
+    
+    # Tady si to vytiskni, jestli to v tom objektu fakt je
+    print(f"DEBUG: publication rbac is {publication.rbacobject_id}")
+
+    return await Insert[PublicationGQLModel].DoItSafeWay(info=info, entity=publication)
      
    
 
@@ -305,7 +326,8 @@ class PublicationMutation:
             # UpdatePermissionCheckRoleFieldExtension[GroupGQLModel](roles=["administrátor", "personalista"]),
             UserAccessControlExtension[UpdateError, PublicationGQLModel](
                 roles=[
-                    "administrátor", 
+                    "administrátor",
+                    "publication_manager",
                     # "personalista"
                 ]
             ),
@@ -337,7 +359,8 @@ class PublicationMutation:
              #UpdatePermissionCheckRoleFieldExtension[GroupGQLModel](roles=["administrátor", "personalista"]),
            UserAccessControlExtension[DeleteError, PublicationGQLModel](
                 roles=[
-                    "administrátor", 
+                    "administrátor",
+                    "publication_manager",
                     # "personalista"
                 ]
             ),

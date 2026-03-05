@@ -37,7 +37,7 @@ from uoishelpers.gqlpermissions.UserAbsoluteAccessControlExtension import UserAb
 
 from .BaseGQLModel import BaseGQLModel, IDType, Relation
 from .TimeUnit import TimeUnit
-from ..DBDefinitions import PublicationAuthorModel
+from src.DBDefinitions import PublicationAuthorModel
 
 UserGQLModel = typing.Annotated["UserGQLModel", strawberry.lazy(".UserGQLModel")]
 PublicationGQLModel = typing.Annotated["PublicationGQLModel", strawberry.lazy(".PublicationGQLModel")]
@@ -244,7 +244,10 @@ class PublicationAddAuthorGQLModel:
         default=0.1
     )
 
-    rbacobject_id: strawberry.Private[IDType] = IDType("d75d64a4-bf5f-43c5-9c14-8fda7aff6c09")
+    rbacobject_id: IDType = strawberry.field(
+        description="""Definitoin of access control"""
+    )
+    
     createdby_id: strawberry.Private[IDType] = None
 
 
@@ -258,6 +261,8 @@ class PublicationAuthorMutation:
         extensions=[UserAccessControlExtension[InsertError, PublicationAuthorGQLModel](
                     roles=[
                         "administrátor",
+                        "author_manager",
+                        "publication_manager",
                     ]
                 ),
                 UserRoleProviderExtension[InsertError, PublicationAuthorGQLModel](),
@@ -285,6 +290,8 @@ class PublicationAuthorMutation:
             UserAccessControlExtension[UpdateError, PublicationAuthorGQLModel](
                 roles=[
                     "administrátor",
+                    "author_manager",
+                    "publication_manager",
                 ]
             ),
             UserRoleProviderExtension[UpdateError, PublicationAuthorGQLModel](),
@@ -312,6 +319,8 @@ class PublicationAuthorMutation:
             UserAccessControlExtension[DeleteError, PublicationAuthorGQLModel](
                 roles=[
                     "administrátor",
+                    "author_manager",
+                    "publication_manager",
                 ]
             ),
             UserRoleProviderExtension[DeleteError, PublicationAuthorGQLModel](),
@@ -336,6 +345,8 @@ class PublicationAuthorMutation:
         extensions=[UserAccessControlExtension[InsertError, PublicationAuthorGQLModel](
                     roles=[
                         "administrátor",
+                        "author_manager",
+                        "publication_manager",
                     ]
                 ),
                 UserRoleProviderExtension[InsertError, PublicationAuthorGQLModel](),

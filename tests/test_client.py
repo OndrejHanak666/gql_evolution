@@ -42,9 +42,6 @@ def test_client_hello_world():
 def test_client_auth_ok():
     client = createGQLClient()
     
-def test_client_auth_ok():
-    client = createGQLClient()
-    
     # Run the query to get the event
     json = {
         'query': """query($id: UUID!){ result: eventById(id: $id) { id sensitiveMsg }}""",
